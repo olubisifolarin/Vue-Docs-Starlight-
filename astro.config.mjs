@@ -7,26 +7,21 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'My Docs',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }], 
 			sidebar: [
 				{
-					label: 'Guides',
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Introduction', slug: 'guides/introduction' },
-						{ label: 'Quick Start', slug: 'guides/quick-start' },
-						
-					],
-				},
-				{	
-					label: 'Essentials',
-					autogenerate: { directory: 'essentials' },
+				  label: 'Getting Started',
+				  items: [
+					{ label: 'Introduction', link: '/getting-started/introduction/' },
+					{ label: 'Quick Start', link: '/getting-started/quick-start/' },
+				  ],
 				},
 				{
-					label: 'Getting Started',
-					autogenerate: { directory: 'getting-started' },
+				  label: 'Essentials',
+				  autogenerate: { directory: 'essentials' },
 				},
-			],
+			  ],
+				
 		}),
 	],
 });
