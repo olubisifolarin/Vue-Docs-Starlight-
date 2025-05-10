@@ -3,9 +3,14 @@ title: Introduction
 description: A guide in my new Starlight docs site.
 ---
 
-Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.
-Writing a good guide requires thinking about what your users are trying to do.
+:::note
 
-## Further reading
+- Vue 2 support has ended on Dec 31, 2023. Learn more about Vue 2 EOL.
+- Upgrading from Vue 2? Check out the Migration Guide.
+:::
 
-- Read [about how-to guides](https://diataxis.fr/how-to-guides/) in the Diátaxis framework
+## What is Vue?
+
+Vue (pronounced /vjuː/, like view) is a JavaScript framework for building user interfaces. It builds on top of standard HTML, CSS, and JavaScript and provides a declarative, component-based programming model that helps you efficiently develop user interfaces of any complexity.
+
+Here is a minimal example:
