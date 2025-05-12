@@ -2,7 +2,7 @@
 title: Quick Start
 description: A quick start in my new Starlight docs site.
 ---
-
+import { Tabs, Tab } from '@astrojs/starlight/components';
 ### Try Vue Online​
 - To quickly get a taste of Vue, you can try it directly in our [▶️ Playground](https://play.vuejs.org/). 
 
@@ -20,27 +20,29 @@ In this section we will introduce how to scaffold a Vue [Single Page Application
 
 Make sure you have an up-to-date version of [Node.js](https://nodejs.org/en) installed and your current working directory is the one where you intend to create a project. Run the following command in your command line (without the $ sign):
 
+<Tabs>
+  <Tab label="npm">
+    ```bash
+    npm create vue@latest
+    ```
+  </Tab>
+  <Tab label="pnpm">
+    ```bash
+    pnpm create vue@latest
+    ```
+  </Tab>
+  <Tab label="yarn">
+    ```bash
+    yarn create vue@latest
+    ```
+  </Tab>
+  <Tab label="bun">
+    ```bash
+    bun create vue@latest
+    ```
+  </Tab>
+</Tabs>
 
-:::tabs
 
-@tab npm
-```bash
-npm create vue@latest
+This command will install and execute [create-vue](), the official Vue project scaffolding tool. You will be presented with prompts for several optional features such as TypeScript and testing support:
 
-@tab pnpm
-pnpm create vue@latest
-
-@tab yarn
-# For Yarn (v1+)
-yarn create vue
-
-# For Yarn Modern (v2+)
-yarn create vue@latest
-
-# For Yarn ^v4.11
-yarn dlx create-vue@latest
-
-@tab bun
-bun create vue@latest
-
-:::
