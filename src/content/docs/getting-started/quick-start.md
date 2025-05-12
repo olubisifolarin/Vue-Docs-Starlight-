@@ -29,3 +29,18 @@ npm create vue@latest
 
 @tab pnpm
 pnpm create vue@latest
+
+@tab yarn
+# For Yarn (v1+)
+yarn create vue
+
+# For Yarn Modern (v2+)
+yarn create vue@latest
+
+# For Yarn ^v4.11
+yarn dlx create-vue@latest
+
+@tab bun
+bun create vue@latest
+
+:::
