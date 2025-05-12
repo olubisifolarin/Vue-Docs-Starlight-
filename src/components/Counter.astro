@@ -1,0 +1,36 @@
+---
+let count = 0;
+const increment = () => {
+  count++;
+};
+---
+
+<script>
+  let count = 0;
+  function increment() {
+    count++;
+    document.getElementById("counter-btn").textContent = `Count is: ${count}`;
+  }
+</script>
+
+<div style="
+  padding: 1rem;
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+  max-width: 300px;
+">
+  <button
+    id="counter-btn"
+    onclick="increment()"
+    style="
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      font-weight: bold;
+      background: #f9f9f9;
+    "
+  >
+    Count is: 0
+  </button>
+</div>
