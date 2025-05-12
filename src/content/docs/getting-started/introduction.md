@@ -9,7 +9,7 @@ description: Introduction to Vue Documentation.
 - Upgrading from Vue 2? Check out the Migration Guide.
 :::
 
-## What is Vue?
+### What is Vue?
 
 Vue (pronounced /vjuː/, like view) is a JavaScript framework for building user interfaces. It builds on top of standard HTML, CSS, and JavaScript and provides a declarative, component-based programming model that helps you efficiently develop user interfaces of any complexity.
 
@@ -18,7 +18,7 @@ Vue (pronounced /vjuː/, like view) is a JavaScript framework for building user 
 The documentation assumes basic familiarity with HTML, CSS, and JavaScript. If you are totally new to frontend development, it might not be the best idea to jump right into a framework as your first step - grasp the basics and then come back! You can check your knowledge level with these overviews for [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Language_overview), [HTML](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content) and [CSS](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics) if needed. Prior experience with other frameworks helps, but is not required.
 :::
 
-## The Progressive Framework​
+### The Progressive Framework​
 
 Vue is a framework that covers most of the common features needed in frontend development. But the web is extremely diverse - the things we build on the web may vary drastically in form and scale. With that in mind, Vue is designed to be flexible and incrementally adoptable. Depending on your use case, Vue can be used in different ways:
 
@@ -31,9 +31,9 @@ Vue is a framework that covers most of the common features needed in frontend de
 
 If you find these concepts intimidating, don't worry! The tutorial and guide only require basic HTML and JavaScript knowledge, and you should be able to follow along without being an expert in any of these.
 
-If you are an experienced developer interested in how to best integrate Vue into your stack, or you are curious about what these terms mean, we discuss them in more [detail in Ways of Using Vue]().
+If you are an experienced developer interested in how to best integrate Vue into your stack, or you are curious about what these terms mean, we discuss them in more detail in [Ways of Using Vue]().
 
-## Single-File Components​
+### Single-File Components​
 In most build-tool-enabled Vue projects, we author Vue components using an HTML-like file format called Single-File Component (also known as *.vue files, abbreviated as SFC). A Vue SFC, as the name suggests, encapsulates the component's logic (JavaScript), template (HTML), and styles (CSS) in a single file. Here's the previous example, written in SFC format:
 
 ```
@@ -55,10 +55,10 @@ button {
 
 SFC is a defining feature of Vue and is the recommended way to author Vue components if your use case warrants a build setup. You can learn more about the [how and why of SFC]() in its dedicated section - but for now, just know that Vue will handle all the build tools setup for you.
 
-## API Styles​
-Vue components can be authored in two different API styles: ** Options API ** and ** Composition API**.
+### API Styles​
+Vue components can be authored in two different API styles: **Options API** and **Composition API**.
 
-## Options API​
+### Options API​
 With Options API, we define a component's logic using an object of options such as `data`, `methods`, and `mounted`. Properties defined by options are exposed on `this` inside functions, which points to the component instance:
 
 ```
@@ -87,6 +87,34 @@ export default {
     console.log(`The initial count is ${this.count}.`)
   }
 }
+</script>
+
+<template>
+  <button @click="increment">Count is: {{ count }}</button>
+</template>
+```
+
+### Composition API​
+With Composition API, we define a component's logic using imported API functions. In SFCs, Composition API is typically used with `<script setup>`. The `setup` attribute is a hint that makes Vue perform compile-time transforms that allow us to use Composition API with less boilerplate. For example, imports and top-level variables / functions declared in `<script setup>` are directly usable in the template.
+
+Here is the same component, with the exact same template, but using Composition API and `<script setup>` instead:
+
+```
+<script setup>
+import { ref, onMounted } from 'vue'
+
+// reactive state
+const count = ref(0)
+
+// functions that mutate state and trigger updates
+function increment() {
+  count.value++
+}
+
+// lifecycle hooks
+onMounted(() => {
+  console.log(`The initial count is ${count.value}.`)
+})
 </script>
 
 <template>
