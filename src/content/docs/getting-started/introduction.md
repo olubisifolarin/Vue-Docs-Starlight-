@@ -128,7 +128,7 @@ The Options API is centered around the concept of a "component instance" (`this`
 
 The Composition API is centered around declaring reactive state variables directly in a function scope and composing state from multiple functions together to handle complexity. It is more free-form and requires an understanding of how reactivity works in Vue to be used effectively. In return, its flexibility enables more powerful patterns for organizing and reusing logic.
 
-You can learn more about the comparison between the two styles and the potential benefits of Composition API in the `Composition API FAQ`.
+You can learn more about the comparison between the two styles and the potential benefits of Composition API in the **Composition API FAQ**.
 
 If you are new to Vue, here's our general recommendation:
 
