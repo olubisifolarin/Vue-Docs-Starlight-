@@ -30,7 +30,8 @@ Here we're encountering something new. The `v-html` attribute you're seeing is c
 
 The contents of the `span` will be replaced with the value of the `rawHtml` property, interpreted as plain HTML - data bindings are ignored. Note that you cannot use v-html to compose template partials, because Vue is not a string-based templating engine. Instead, components are preferred as the fundamental unit for UI reuse and composition.
 
-:::warning[Security Warning]
+
+:::danger[Security Warning]
 
 Dynamically rendering arbitrary HTML on your website can be very dangerous because it can easily lead to XSS vulnerabilities. Only use v-html on trusted content and never on user-provided content.
 :::
