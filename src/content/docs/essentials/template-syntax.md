@@ -17,3 +17,20 @@ The most basic form of data binding is text interpolation using the "Mustache" s
 ```
 
 The mustache tag will be replaced with the value of the `msg` property [from the corresponding component instance](). It will also be updated whenever the `msg` property changes.
+
+### Raw HTML​
+The double mustaches interpret the data as plain text, not HTML. In order to output real HTML, you will need to use the `v-html` directive:
+
+```
+<p>Using text interpolation: {{ rawHtml }}</p>
+<p>Using v-html directive: <span v-html="rawHtml"></span></p>
+```
+
+Here we're encountering something new. The `v-html` attribute you're seeing is called a directive. Directives are prefixed with `v-` to indicate that they are special attributes provided by Vue, and as you may have guessed, they apply special reactive behavior to the rendered DOM. Here, we're basically saying "keep this element's inner HTML up-to-date with the `rawHtml` property on the current active instance."
+
+The contents of the `span` will be replaced with the value of the `rawHtml` property, interpreted as plain HTML - data bindings are ignored. Note that you cannot use v-html to compose template partials, because Vue is not a string-based templating engine. Instead, components are preferred as the fundamental unit for UI reuse and composition.
+
+:::warning[Security Warning]
+
+Dynamically rendering arbitrary HTML on your website can be very dangerous because it can easily lead to XSS vulnerabilities. Only use v-html on trusted content and never on user-provided content.
+:::
