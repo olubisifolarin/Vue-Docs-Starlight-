@@ -194,4 +194,31 @@ Import Maps is a relatively new browser feature. Make sure to use a browser with
 The examples so far are using the development build of Vue - if you intend to use Vue from a CDN in production, make sure to check out the Production Deployment Guide.
 
 While it is possible to use Vue without a build system, an alternative approach to consider is using vuejs/petite-vue that could better suit the context where jquery/jquery (in the past) or alpinejs/alpine (in the present) might be used instead.
+
 :::
+
+### Splitting Up the Modules​
+As we dive deeper into the guide, we may need to split our code into separate JavaScript files so that they are easier to manage. For example:
+
+```
+<!-- index.html -->
+<div id="app"></div>
+
+<script type="module">
+  import { createApp } from 'vue'
+  import MyComponent from './my-component.js'
+
+  createApp(MyComponent).mount('#app')
+</script>
+```
+```
+// my-component.js
+import { ref } from 'vue'
+export default {
+  setup() {
+    const count = ref(0)
+    return { count }
+  },
+  template: `<div>Count is: {{ count }}</div>`
+}
+```
