@@ -34,3 +34,14 @@ The contents of the `span` will be replaced with the value of the `rawHtml` prop
 
 Dynamically rendering arbitrary HTML on your website can be very dangerous because it can easily lead to XSS vulnerabilities. Only use v-html on trusted content and never on user-provided content.
 :::
+
+### Attribute Bindings​
+Mustaches cannot be used inside HTML attributes. Instead, use a `v-bind` directive:
+
+```
+<div v-bind:id="dynamicId"></div>
+```
+
+The `v-bind` directive instructs Vue to keep the element's `id` attribute in sync with the component's `dynamicId` property. If the bound value is `null` or `undefined`, then the attribute will be removed from the rendered element.
+
+### Shorthand
