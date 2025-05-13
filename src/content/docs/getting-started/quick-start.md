@@ -65,6 +65,9 @@ Done.
 If you are unsure about an option, simply choose No by hitting enter for now. Once the project is created, follow the instructions to install dependencies and start the dev server:
 
 ```
+cd <your-project-name>
+$ npm install
+$ npm run dev
 ```
 
 You should now have your first Vue project running! Note that the example components in the generated project are written using the [Composition API]() and `<script setup>`, rather than the [Options API](). Here are some additional tips:
@@ -74,3 +77,14 @@ You should now have your first Vue project running! Note that the example compon
 - To learn more about the underlying build tool Vite, check out the Vite docs.
 - If you choose to use TypeScript, check out the TypeScript Usage Guide.
 When you are ready to ship your app to production, run the following:
+
+```
+npm run build
+```
+
+### Using Vue from CDN​
+You can use Vue directly from a CDN via a script tag:
+
+```
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+```
