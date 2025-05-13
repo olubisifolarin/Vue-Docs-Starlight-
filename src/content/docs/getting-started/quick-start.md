@@ -88,3 +88,29 @@ You can use Vue directly from a CDN via a script tag:
 ```
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 ```
+
+Here we are using [unpkg](https://unpkg.com/), but you can also use any CDN that serves npm packages, for example [jsdelivr](https://www.jsdelivr.com/package/npm/vue) or [cdnjs](https://cdnjs.com/libraries/vue). Of course, you can also download this file and serve it yourself.
+
+When using Vue from a CDN, there is no "build step" involved. This makes the setup a lot simpler, and is suitable for enhancing static HTML or integrating with a backend framework. However, you won't be able to use the Single-File Component (SFC) syntax.
+
+### Using the Global Build​
+The above link loads the global build of Vue, where all top-level APIs are exposed as properties on the global `Vue` object. Here is a full example using the global build:
+
+```
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div id="app">{{ message }}</div>
+
+<script>
+  const { createApp, ref } = Vue
+
+  createApp({
+    setup() {
+      const message = ref('Hello vue!')
+      return {
+        message
+      }
+    }
+  }).mount('#app')
+</script>
+```
