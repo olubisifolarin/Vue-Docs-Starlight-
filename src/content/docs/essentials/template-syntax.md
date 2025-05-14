@@ -82,3 +82,5 @@ This is similar to the property shorthand syntax when declaring objects in JavaS
 ```
 <button :disabled="isButtonDisabled">Button</button>
 ```
+
+The `disabled` attribute will be included if `isButtonDisabled` has a [truthy value](https://developer.mozilla.org/en-US/docs/Glossary/Truthy). It will also be included if the value is an empty string, maintaining consistency with `<button disabled="">`. For other [falsy values](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) the attribute will be omitted.
