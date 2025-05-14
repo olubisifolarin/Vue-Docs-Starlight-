@@ -84,3 +84,25 @@ This is similar to the property shorthand syntax when declaring objects in JavaS
 ```
 
 The `disabled` attribute will be included if `isButtonDisabled` has a [truthy value](https://developer.mozilla.org/en-US/docs/Glossary/Truthy). It will also be included if the value is an empty string, maintaining consistency with `<button disabled="">`. For other [falsy values](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) the attribute will be omitted.
+
+### Dynamically Binding Multiple Attributes​
+If you have a JavaScript object representing multiple attributes that looks like this:
+
+```
+const objectOfAttrs = {
+  id: 'container',
+  class: 'wrapper',
+  style: 'background-color:green'
+}
+```
+
+You can bind them to a single element by using `v-bind` without an argument:
+
+```
+const objectOfAttrs = {
+  id: 'container',
+  class: 'wrapper',
+  style: 'background-color:green'
+}
+
+```
