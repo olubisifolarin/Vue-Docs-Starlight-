@@ -10,3 +10,42 @@ This page and many other chapters later in the guide contain different content f
 ### Declaring Reactive State​
 `ref()`​
 In Composition API, the recommended way to declare reactive state is using the ref() function:
+
+```
+import { ref } from 'vue'
+
+const count = ref(0)
+```
+
+`ref()` takes the argument and returns it wrapped within a ref object with a `.value` property:
+
+```
+const count = ref(0)
+
+console.log(count) // { value: 0 }
+console.log(count.value) // 0
+
+count.value++
+console.log(count.value) // 1
+```
+
+To access refs in a component's template, declare and return them from a component's `setup()` function:
+
+```
+import { ref } from 'vue'
+
+export default {
+  // `setup` is a special hook dedicated for the Composition API.
+  setup() {
+    const count = ref(0)
+
+    // expose the ref to the template
+    return {
+      count
+    }
+  }
+}
+```
+```
+<div>{{ count }}</div>
+```
