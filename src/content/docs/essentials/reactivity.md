@@ -279,3 +279,55 @@ Due to these limitations, we recommend using `ref()` as the primary API for decl
 ### Additional Ref Unwrapping Details​
 #### As Reactive Object Property​
 A ref is automatically unwrapped when accessed or mutated as a property of a reactive object. In other words, it behaves like a normal property:
+
+```
+const count = ref(0)
+const state = reactive({
+  count
+})
+
+console.log(state.count) // 0
+
+state.count = 1
+console.log(count.value) // 1
+```
+If a new ref is assigned to a property linked to an existing ref, it will replace the old ref:
+
+```
+const otherCount = ref(2)
+
+state.count = otherCount
+console.log(state.count) // 2
+// original ref is now disconnected from state.count
+console.log(count.value) // 1
+```
+
+Ref unwrapping only happens when nested inside a deep reactive object. It does not apply when it is accessed as a property of a [shallow reactive object]().
+
+### Caveat in Arrays and Collections​
+Unlike reactive objects, there is **no** unwrapping performed when the ref is accessed as an element of a reactive array or a native collection type like `Map`:
+
+```
+const books = reactive([ref('Vue 3 Guide')])
+// need .value here
+console.log(books[0].value)
+
+const map = reactive(new Map([['count', ref(0)]]))
+// need .value here
+console.log(map.get('count').value)
+```
+
+### Caveat when Unwrapping in Templates​
+Ref unwrapping in templates only applies if the ref is a top-level property in the template render context.
+
+In the example below, `count` and `object` are top-level properties, but `object.id` is not:
+
+```
+const count = ref(0)
+const object = { id: ref(1) }
+```
+Therefore, this expression works as expected:
+
+```
+{{ count + 1 }}
+```
