@@ -154,3 +154,57 @@ The reactivity system is discussed in more details in the [Reactivity in Depth](
 Refs can hold any value type, including deeply nested objects, arrays, or JavaScript built-in data structures like `Map`.
 
 A ref will make its value deeply reactive. This means you can expect changes to be detected even when you mutate nested objects or arrays:
+
+```
+import { ref } from 'vue'
+
+const obj = ref({
+  nested: { count: 0 },
+  arr: ['foo', 'bar']
+})
+
+function mutateDeeply() {
+  // these will work as expected.
+  obj.value.nested.count++
+  obj.value.arr.push('baz')
+}
+```
+
+Non-primitive values are turned into `reactive` proxies via reactive(), which is discussed below.
+
+It is also possible to opt-out of deep reactivity with shallow refs. For shallow refs, only `.value` access is tracked for reactivity. Shallow refs can be used for optimizing performance by avoiding the observation cost of large objects, or in cases where the inner state is managed by an external library.
+
+### DOM Update Timing​
+When you mutate reactive state, the DOM is updated automatically. However, it should be noted that the DOM updates are not applied synchronously. Instead, Vue buffers them until the "next tick" in the update cycle to ensure that each component updates only once no matter how many state changes you have made.
+
+To wait for the DOM update to complete after a state change, you can use the [nextTick()]() global API:
+
+```
+import { nextTick } from 'vue'
+
+async function increment() {
+  count.value++
+  await nextTick()
+  // Now the DOM is updated
+}
+```
+
+### reactive()​
+There is another way to declare reactive state, with the `reactive()` API. Unlike a ref which wraps the inner value in a special object, `reactive()` makes an object itself reactive:
+
+```
+import { reactive } from 'vue'
+
+const state = reactive({ count: 0 })
+```
+Usage in template:
+
+```
+<button @click="state.count++">
+  {{ state.count }}
+</button>
+```
+
+Reactive objects are [JavaScript Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) and behave just like normal objects. The difference is that Vue is able to intercept the access and mutation of all properties of a reactive object for reactivity tracking and triggering.
+
+`reactive()` converts the object deeply: nested objects are also wrapped with `reactive()` when accessed. It is also called by `ref()` internally when the ref value is an object. Similar to shallow refs, there is also the `shallowReactive()` API for opting-out of deep reactivity.
