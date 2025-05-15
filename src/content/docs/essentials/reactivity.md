@@ -112,7 +112,7 @@ function increment() {
 </template>
 ```
 
-[▶️ Try it in the Playground](https://play.vuejs.org/)
+##### [▶️ Try it in the Playground](https://play.vuejs.org/)
 
 Top-level imports, variables and functions declared in `<script setup>` are automatically usable in the template of the same component. Think of the template as a JavaScript function declared in the same scope - it naturally has access to everything declared alongside it.
 
@@ -208,3 +208,74 @@ Usage in template:
 Reactive objects are [JavaScript Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) and behave just like normal objects. The difference is that Vue is able to intercept the access and mutation of all properties of a reactive object for reactivity tracking and triggering.
 
 `reactive()` converts the object deeply: nested objects are also wrapped with `reactive()` when accessed. It is also called by `ref()` internally when the ref value is an object. Similar to shallow refs, there is also the `shallowReactive()` API for opting-out of deep reactivity.
+
+### Reactive Proxy vs. Original
+
+It is important to note that the returned value from `reactive()' is a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) of the original object, which is not equal to the original object:
+
+```
+const raw = {}
+const proxy = reactive(raw)
+
+// proxy is NOT equal to the original.
+console.log(proxy === raw) // false
+```
+
+Only the proxy is reactive - mutating the original object will not trigger updates. Therefore, the best practice when working with Vue's reactivity system is to **exclusively use the proxied versions of your state**.
+
+To ensure consistent access to the proxy, calling `reactive()` on the same object always returns the same proxy, and calling `reactive()` on an existing proxy also returns that same proxy:
+
+```
+// calling reactive() on the same object returns the same proxy
+console.log(reactive(raw) === proxy) // true
+
+// calling reactive() on a proxy returns itself
+console.log(reactive(proxy) === proxy) // true
+```
+
+This rule applies to nested objects as well. Due to deep reactivity, nested objects inside a reactive object are also proxies:
+
+```
+const proxy = reactive({})
+
+const raw = {}
+proxy.nested = raw
+
+console.log(proxy.nested === raw) // false
+```
+### Limitations of `reactive()`
+
+The `reactive()` API has a few limitations:
+
+1. **Limited value types:** it only works for object types (objects, arrays, and [collection types](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects#keyed_collections) such as `Map` and `Set`). It cannot hold [primitive types](https://developer.mozilla.org/en-US/docs/Glossary/Primitive) such as `string`, `number` or `boolean`.
+
+2. **Cannot replace entire object:** since Vue's reactivity tracking works over property access, we must always keep the same reference to the reactive object. This means we can't easily "replace" a reactive object because the reactivity connection to the first reference is lost:
+
+```
+let state = reactive({ count: 0 })
+
+// the above reference ({ count: 0 }) is no longer being tracked
+// (reactivity connection is lost!)
+state = reactive({ count: 1 })
+```
+
+3. **Not destructure-friendly:** when we destructure a reactive object's primitive type property into local variables, or when we pass that property into a function, we will lose the reactivity connection:
+
+```
+const state = reactive({ count: 0 })
+
+// count is disconnected from state.count when destructured.
+let { count } = state
+// does not affect original state
+count++
+
+// the function receives a plain number and
+// won't be able to track changes to state.count
+// we have to pass the entire object in to retain reactivity
+callSomeFunction(state.count)
+```
+Due to these limitations, we recommend using `ref()` as the primary API for declaring reactive state.
+
+### Additional Ref Unwrapping Details​
+#### As Reactive Object Property​
+A ref is automatically unwrapped when accessed or mutated as a property of a reactive object. In other words, it behaves like a normal property:
