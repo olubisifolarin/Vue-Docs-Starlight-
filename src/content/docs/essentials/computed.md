@@ -60,6 +60,20 @@ const publishedBooksMessage = computed(() => {
 ```
 ##### [▶️ Try it in the Playground](https://play.vuejs.org/). 
 
-Here we have declared a computed property publishedBooksMessage. The computed() function expects to be passed a getter function, and the returned value is a computed ref. Similar to normal refs, you can access the computed result as publishedBooksMessage.value. Computed refs are also auto-unwrapped in templates so you can reference them without .value in template expressions.
+Here we have declared a computed property `publishedBooksMessage`. The `computed()` function expects to be passed a getter function, and the returned value is a computed ref. Similar to normal refs, you can access the computed result as `publishedBooksMessage.value`. Computed refs are also auto-unwrapped in templates so you can reference them without `.value` in template expressions.
 
-A computed property automatically tracks its reactive dependencies. Vue is aware that the computation of publishedBooksMessage depends on author.books, so it will update any bindings that depend on publishedBooksMessage when author.books changes.
+A computed property automatically tracks its reactive dependencies. Vue is aware that the computation of  `publishedBooksMessage`  depends on `author.books`, so it will update any bindings that depend on `publishedBooksMessage` when `author.books` changes.
+
+### Computed Caching vs. Methods​
+You may have noticed we can achieve the same result by invoking a method in the expression:
+
+```
+<p>{{ calculateBooksMessage() }}</p>
+```
+
+```
+// in component
+function calculateBooksMessage() {
+  return author.books.length > 0 ? 'Yes' : 'No'
+}
+```
