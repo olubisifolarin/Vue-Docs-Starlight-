@@ -39,3 +39,22 @@ It will render:
 ```
 <div class="static active"></div>
 ```
+
+When `isActive` or `hasError` changes, the class list will be updated accordingly. For example, if `hasError` becomes `true`, the class list will become `"static active text-danger"`.
+
+The bound object doesn't have to be inline:
+
+```
+const classObject = reactive({
+  active: true,
+  'text-danger': false
+})
+```
+```
+<div :class="classObject"></div>
+```
+This will render:
+
+```
+<div class="active"></div>
+```
