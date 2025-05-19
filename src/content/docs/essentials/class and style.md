@@ -58,3 +58,5 @@ This will render:
 ```
 <div class="active"></div>
 ```
+
+We can also bind to a [computed property](/essentials/computed) that returns an object. This is a common and powerful pattern:
