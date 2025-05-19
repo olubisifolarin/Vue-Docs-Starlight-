@@ -22,3 +22,14 @@ const author = reactive({
   ]
 })
 ```
+
+And we want to display different messages depending on if `author` already has some books or not:
+
+```
+<p>Has published books:</p>
+<span>{{ author.books.length > 0 ? 'Yes' : 'No' }}</span>
+```
+
+At this point, the template is getting a bit cluttered. We have to look at it for a second before realizing that it performs a calculation depending on `author.books`. More importantly, we probably don't want to repeat ourselves if we need to include this calculation in the template more than once.
+
+That's why for complex logic that includes reactive data, it is recommended to use a **computed property**. Here's the same example, refactored:
