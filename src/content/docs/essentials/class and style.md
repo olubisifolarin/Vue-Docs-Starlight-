@@ -9,6 +9,7 @@ common need for data binding is manipulating an element's class list and inline 
 
 ##### [▶️ Watch a free video lesson on Vue School](https://vueschool.io/lessons/vue-fundamentals-capi-dynamic-css-classes-with-vue?friend=vuejs)
 
+#
 #### Binding to Objects​
 We can pass an object to `:class` (short for `v-bind:class`) to dynamically toggle classes:
 
@@ -159,3 +160,71 @@ Will render:
 <span>This is a child component</span>
 ```
 You can learn more about component attribute inheritance in [Fallthrough Attributes section]().
+
+### Binding Inline Styles​
+#
+
+#### Binding to Objects​
+`:style` supports binding to JavaScript object values - it corresponds to an HTML [element's](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) `style` [property:](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style)
+
+```
+const activeColor = ref('red')
+const fontSize = ref(30)
+```
+
+```
+<div :style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
+```
+Although camelCase keys are recommended, `:style` also supports kebab-cased CSS property keys (corresponds to how they are used in actual CSS) - for example:
+
+```
+<div :style="{ 'font-size': fontSize + 'px' }"></div>
+```
+
+It is often a good idea to bind to a style object directly so that the template is cleaner:
+
+```
+const styleObject = reactive({
+  color: 'red',
+  fontSize: '30px'
+})
+```
+
+```
+<div :style="styleObject"></div>
+```
+
+Again, object style binding is often used in conjunction with computed properties that return objects.
+
+`:style` directives can also coexist with regular style attributes, just like `:class`.
+
+Template:
+
+```
+<h1 style="color: red" :style="'font-size: 1em'">hello</h1>
+```
+
+It will render:
+
+```
+<h1 style="color: red; font-size: 1em;">hello</h1>
+```
+
+### Binding to Arrays​
+We can bind `:style` to an array of multiple style objects. These objects will be merged and applied to the same element:
+
+```
+<div :style="[baseStyles, overridingStyles]"></div>
+```
+
+### Auto-prefixing​
+When you use a CSS property that requires a [vendor prefix](https://developer.mozilla.org/en-US/docs/Glossary/Vendor_Prefix) in `:style`, Vue will automatically add the appropriate prefix. Vue does this by checking at runtime to see which style properties are supported in the current browser. If the browser doesn't support a particular property then various prefixed variants will be tested to try to find one that is supported.
+
+### Multiple Values​
+You can provide an array of multiple (prefixed) values to a style property, for example:
+
+```
+<div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
+```
+
+This will only render the last value in the array which the browser supports. In this example, it will render `display: flex` for browsers that support the unprefixed version of flexbox.
