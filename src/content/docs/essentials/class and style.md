@@ -60,3 +60,20 @@ This will render:
 ```
 
 We can also bind to a [computed property](/essentials/computed) that returns an object. This is a common and powerful pattern:
+
+```
+const isActive = ref(true)
+const error = ref(null)
+
+const classObject = computed(() => ({
+  active: isActive.value && !error.value,
+  'text-danger': error.value && error.value.type === 'fatal'
+}))
+```
+
+```
+<div :class="classObject"></div>
+```
+
+### Binding to Arrays​
+We can bind `:class` to an array to apply a list of classes:
