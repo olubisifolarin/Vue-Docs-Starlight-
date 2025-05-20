@@ -130,3 +130,32 @@ The rendered HTML will be:
 <p class="foo bar baz boo">Hi!</p>
 ```
 The same is true for class bindings:
+
+```
+<MyComponent :class="{ active: isActive }" />
+```
+
+When `isActive` is truthy, the rendered HTML will be:
+
+```
+<p class="foo bar active">Hi!</p>
+```
+
+If your component has multiple root elements, you would need to define which element will receive this class. You can do this using the `$attrs` component property:
+
+```
+<!-- MyComponent template using $attrs -->
+<p :class="$attrs.class">Hi!</p>
+<span>This is a child component</span>
+```
+
+```
+<MyComponent class="baz" />
+```
+Will render:
+
+```
+<p class="baz">Hi!</p>
+<span>This is a child component</span>
+```
+You can learn more about component attribute inheritance in [Fallthrough Attributes section]().
