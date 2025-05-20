@@ -97,3 +97,36 @@ If you would like to also toggle a class in the list conditionally, you can do i
 ```
 <div :class="[isActive ? activeClass : '', errorClass]"></div>
 ```
+
+This will always apply `errorClass`, but `activeClass` will only be applied when `isActive` is truthy.
+
+However, this can be a bit verbose if you have multiple conditional classes. That's why it's also possible to use the object syntax inside the array syntax:
+
+```
+<div :class="[{ [activeClass]: isActive }, errorClass]"></div>
+```
+
+### With Components​
+This section assumes knowledge of Components. Feel free to skip it and come back later.
+
+When you use the `class` attribute on a component with a single root element, those classes will be added to the component's root element and merged with any existing class already on it.
+
+For example, if we have a component named `MyComponent` with the following template:
+
+```
+<!-- child component template -->
+<p class="foo bar">Hi!</p>
+```
+
+Then add some classes when using it:
+
+```
+<!-- when using the component -->
+<MyComponent class="baz boo" />
+```
+The rendered HTML will be:
+
+```
+<p class="foo bar baz boo">Hi!</p>
+```
+The same is true for class bindings:
