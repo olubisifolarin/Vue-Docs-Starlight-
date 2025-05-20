@@ -20,6 +20,10 @@ export default defineConfig({
 				  label: 'Essentials',
 				  autogenerate: { directory: 'essentials' },
 				},
+				{
+				  label: 'Components In-Depth',
+				  autogenerate: { directory: 'component' },
+				},
 			  ],
 				
 		}),
