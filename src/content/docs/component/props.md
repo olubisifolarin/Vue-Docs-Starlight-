@@ -145,5 +145,21 @@ Technically, you can also use camelCase when passing props to a child component 
 <MyComponent greeting-message="hello" />
 ```
 
-We use [PascalCase for component tags](/component/#component-name-casing) when possible because it improves template readability by differentiating Vue components from native elements. However, there isn't as much practical benefit in using camelCase when passing props, so we choose to follow each language's conventions.
+We use [PascalCase for component tags](/component/props) when possible because it improves template readability by differentiating Vue components from native elements. However, there isn't as much practical benefit in using camelCase when passing props, so we choose to follow each language's conventions.
 
+### Static vs. Dynamic Props​
+So far, you've seen props passed as static values, like in:
+
+```
+<BlogPost title="My journey with Vue" />
+```
+
+You've also seen props assigned dynamically with `v-bind` or its : `shortcut`, such as in:
+
+```
+<!-- Dynamically assign the value of a variable -->
+<BlogPost :title="post.title" />
+
+<!-- Dynamically assign the value of a complex expression -->
+<BlogPost :title="post.title + ' by ' + post.author.name" />
+```
