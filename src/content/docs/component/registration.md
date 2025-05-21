@@ -5,6 +5,7 @@ description: Registration
 
 ### Component Registration​
 
+</br>
 <a href="https://vueschool.io/lessons/vue-3-global-vs-local-vue-components?friend=vuejs" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
   ▶️ Watch a free video lesson on Vue School
 </a>
