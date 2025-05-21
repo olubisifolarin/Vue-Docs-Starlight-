@@ -85,3 +85,27 @@ export default {
   }
 }
 ```
+
+For each property in the `components` object, the key will be the registered name of the component, while the value will contain the implementation of the component. The above example is using the ES2015 property shorthand and is equivalent to:
+
+```
+export default {
+  components: {
+    ComponentA: ComponentA
+  }
+  // ...
+}
+```
+
+Note that locally registered components are not also available in descendant components. In this case, `ComponentA` will be made available to the current component only, not any of its child or descendant components.
+
+### Component Name Casing​
+Throughout the guide, we are using PascalCase names when registering components. This is because:
+
+1. PascalCase names are valid JavaScript identifiers. This makes it easier to import and register components in JavaScript. It also helps IDEs with auto-completion.
+
+2. `<PascalCase />` makes it more obvious that this is a Vue component instead of a native HTML element in templates. It also differentiates Vue components from custom elements (web components).
+
+This is the recommended style when working with SFC or string templates. However, as discussed in in-DOM Template Parsing Caveats, PascalCase tags are not usable in in-DOM templates.
+
+Luckily, Vue supports resolving kebab-case tags to components registered using PascalCase. This means a component registered as `MyComponent` can be referenced inside a Vue template (or inside an HTML element rendered by Vue) via both `<MyComponent>` and `<my-component>`. This allows us to use the same JavaScript component registration code regardless of template source.
