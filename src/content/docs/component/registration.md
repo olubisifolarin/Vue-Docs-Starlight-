@@ -49,3 +49,39 @@ Globally registered components can be used in the template of any component with
 ```
 
 This even applies to all subcomponents, meaning all three of these components will also be available inside each other.
+
+### Local Registration​
+While convenient, global registration has a few drawbacks:
+
+1. Global registration prevents build systems from removing unused components (a.k.a "tree-shaking"). If you globally register a component but end up not using it anywhere in your app, it will still be included in the final bundle.
+
+2. Global registration makes dependency relationships less explicit in large applications. It makes it difficult to locate a child component's implementation from a parent component using it. This can affect long-term maintainability similar to using too many global variables.
+
+Local registration scopes the availability of the registered components to the current component only. It makes the dependency relationship more explicit, and is more tree-shaking friendly.
+
+When using SFC with `<script setup>`, imported components can be locally used without registration:
+
+```
+<script setup>
+import ComponentA from './ComponentA.vue'
+</script>
+
+<template>
+  <ComponentA />
+</template>
+```
+
+In non-`<script setup>`, you will need to use the `components` option:
+
+```
+import ComponentA from './ComponentA.js'
+
+export default {
+  components: {
+    ComponentA
+  },
+  setup() {
+    // ...
+  }
+}
+```
