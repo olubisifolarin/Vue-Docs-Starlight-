@@ -27,3 +27,30 @@ export default {
   }
 }
 ```
+
+Notice the argument passed to `defineProps()` is the same as the value provided to the `props` options: the same props options API is shared between the two declaration styles.
+
+In addition to declaring props using an array of strings, we can also use the object syntax:
+
+```
+// in <script setup>
+defineProps({
+  title: String,
+  likes: Number
+})
+```
+```
+// in non-<script setup>
+export default {
+  props: {
+    title: String,
+    likes: Number
+  }
+}
+```
+
+For each property in the object declaration syntax, the key is the name of the prop, while the value should be the constructor function of the expected type.
+
+This not only documents your component, but will also warn other developers using your component in the browser console if they pass the wrong type. We will discuss more details about [prop validation]() further down this page.
+
+If you are using TypeScript with `<script setup>`, it's also possible to declare props using pure type annotations:
