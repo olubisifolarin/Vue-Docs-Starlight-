@@ -177,3 +177,43 @@ Number
 <!-- Dynamically assign to the value of a variable. -->
 <BlogPost :likes="post.likes" />
 ```
+
+Boolean
+
+```
+<!-- Including the prop with no value will imply `true`. -->
+<BlogPost is-published />
+
+<!-- Even though `false` is static, we need v-bind to tell Vue that -->
+<!-- this is a JavaScript expression rather than a string.          -->
+<BlogPost :is-published="false" />
+
+<!-- Dynamically assign to the value of a variable. -->
+<BlogPost :is-published="post.isPublished" />
+```
+
+Array
+```
+<!-- Even though the array is static, we need v-bind to tell Vue that -->
+<!-- this is a JavaScript expression rather than a string.            -->
+<BlogPost :comment-ids="[234, 266, 273]" />
+
+<!-- Dynamically assign to the value of a variable. -->
+<BlogPost :comment-ids="post.commentIds" />
+```
+
+Object
+
+```
+<!-- Even though the object is static, we need v-bind to tell Vue that -->
+<!-- this is a JavaScript expression rather than a string.             -->
+<BlogPost
+  :author="{
+    name: 'Veronica',
+    company: 'Veridian Dynamics'
+  }"
+ />
+
+<!-- Dynamically assign to the value of a variable. -->
+<BlogPost :author="post.author" />
+```
