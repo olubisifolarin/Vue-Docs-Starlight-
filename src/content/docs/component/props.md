@@ -163,3 +163,17 @@ You've also seen props assigned dynamically with `v-bind` or its : `shortcut`, s
 <!-- Dynamically assign the value of a complex expression -->
 <BlogPost :title="post.title + ' by ' + post.author.name" />
 ```
+
+Passing Different Value Types​
+In the two examples above, we happen to pass string values, but any type of value can be passed to a prop.
+
+Number
+
+```
+<!-- Even though `42` is static, we need v-bind to tell Vue that -->
+<!-- this is a JavaScript expression rather than a string.       -->
+<BlogPost :likes="42" />
+
+<!-- Dynamically assign to the value of a variable. -->
+<BlogPost :likes="post.likes" />
+```
