@@ -363,3 +363,79 @@ The type can be one of the following native constructors:
 - Symbol
 - Error
 In addition, `type` can also be a custom class or constructor function and the assertion will be made with an `instanceof` check. For example, given the following class:
+
+```
+class Person {
+  constructor(firstName, lastName) {
+    this.firstName = firstName
+    this.lastName = lastName
+  }
+}
+```
+You could use it as a prop's type:
+
+```
+defineProps({
+  author: Person
+})
+```
+Vue will use `instanceof Person` to validate whether the value of the `author` prop is indeed an instance of the `Person` class.
+
+### Nullable Type
+
+If the type is required but nullable, you can use the array syntax that includes `null:`
+
+```
+defineProps({
+  id: {
+    type: [String, null],
+    required: true
+  }
+})
+```
+
+Note that if `type` is just `null` without using the array syntax, it will allow any type.
+
+#### Boolean Casting
+
+Props with `Boolean` type have special casting rules to mimic the behavior of native boolean attributes. Given a `<MyComponent>` with the following declaration:
+
+```
+defineProps({
+  disabled: Boolean
+})
+```
+
+The component can be used like this:
+
+```
+<!-- equivalent of passing :disabled="true" -->
+<MyComponent disabled />
+
+<!-- equivalent of passing :disabled="false" -->
+<MyComponent />
+```
+
+When a prop is declared to allow multiple types, the casting rules for `Boolean` will also be applied. However, there is an edge when both `String` and `Boolean` are allowed - the Boolean casting rule only applies if Boolean appears before String:
+
+```
+// disabled will be casted to true
+defineProps({
+  disabled: [Boolean, Number]
+})
+
+// disabled will be casted to true
+defineProps({
+  disabled: [Boolean, String]
+})
+
+// disabled will be casted to true
+defineProps({
+  disabled: [Number, Boolean]
+})
+
+// disabled will be parsed as an empty string (disabled="")
+defineProps({
+  disabled: [String, Boolean]
+})
+```
