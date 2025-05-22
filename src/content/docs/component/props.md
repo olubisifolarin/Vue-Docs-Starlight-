@@ -239,3 +239,27 @@ Will be equivalent to:
 ```
 <BlogPost :id="post.id" :title="post.title" />
 ```
+
+### One-Way Data Flow​
+All props form a **one-way-down binding** between the child property and the parent one: when the parent property updates, it will flow down to the child, but not the other way around. This prevents child components from accidentally mutating the parent's state, which can make your app's data flow harder to understand.
+
+In addition, every time the parent component is updated, all props in the child component will be refreshed with the latest value. This means you should not attempt to mutate a prop inside a child component. If you do, Vue will warn you in the console:
+
+```
+const props = defineProps(['foo'])
+
+// ❌ warning, props are readonly!
+props.foo = 'bar'
+```
+
+There are usually two cases where it's tempting to mutate a prop:
+
+1. **The prop is used to pass in an initial value; the child component wants to use it as a local data property afterwards**. In this case, it's best to define a local data property that uses the prop as its initial value:
+
+```
+const props = defineProps(['initialCounter'])
+
+// counter only uses props.initialCounter as the initial value;
+// it is disconnected from future prop updates.
+const counter = ref(props.initialCounter)
+```
