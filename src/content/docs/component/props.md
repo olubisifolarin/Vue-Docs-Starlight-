@@ -334,3 +334,32 @@ defineProps({
   }
 })
 ```
+
+:::
+Code tip[TIP]
+inside the `defineProps()` argument cannot access other variables declared in `<script setup>`, because the entire expression is moved to an outer function scope when compiled.
+:::
+
+Additional details:
+
+- All props are optional by default, unless `required: true` is specified.
+
+- An absent optional prop other than `Boolean` will have `undefined` value.
+
+- The `Boolean` absent props will be cast to `false`. You can change this by setting a default for it — i.e.: `default: undefined` to behave as a non-Boolean prop.
+
+If a `default` value is specified, it will be used if the resolved prop value is `undefined` - this includes both when the prop is absent, or an explicit `undefined` value is passed.
+
+### Runtime Type Checks​
+The type can be one of the following native constructors:
+
+- String
+- Number
+- Boolean
+- Array
+- Object
+- Date
+- Function
+- Symbol
+- Error
+In addition, `type` can also be a custom class or constructor function and the assertion will be made with an `instanceof` check. For example, given the following class:
