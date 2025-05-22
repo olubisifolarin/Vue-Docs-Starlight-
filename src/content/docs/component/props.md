@@ -263,3 +263,74 @@ const props = defineProps(['initialCounter'])
 // it is disconnected from future prop updates.
 const counter = ref(props.initialCounter)
 ```
+
+2. **The prop is passed in as a raw value that needs to be transformed**. In this case, it's best to define a computed property using the prop's value:
+
+```
+const props = defineProps(['size'])
+
+// computed property that auto-updates when the prop changes
+const normalizedSize = computed(() => props.size.trim().toLowerCase())
+```
+
+### Mutating Object / Array Props​
+When objects and arrays are passed as props, while the child component cannot mutate the prop binding, it will be able to mutate the object or array's nested properties. This is because in JavaScript objects and arrays are passed by reference, and it is unreasonably expensive for Vue to prevent such mutations.
+
+The main drawback of such mutations is that it allows the child component to affect parent state in a way that isn't obvious to the parent component, potentially making it more difficult to reason about the data flow in the future. As a best practice, you should avoid such mutations unless the parent and child are tightly coupled by design. In most cases, the child should emit an event to let the parent perform the mutation.
+
+### Prop Validation​
+Components can specify requirements for their props, such as the types you've already seen. If a requirement is not met, Vue will warn you in the browser's JavaScript console. This is especially useful when developing a component that is intended to be used by others.
+
+To specify prop validations, you can provide an object with validation requirements to the `defineProps()` macro, instead of an array of strings. For example:
+
+```
+defineProps({
+  // Basic type check
+  //  (`null` and `undefined` values will allow any type)
+  propA: Number,
+  // Multiple possible types
+  propB: [String, Number],
+  // Required string
+  propC: {
+    type: String,
+    required: true
+  },
+  // Required but nullable string
+  propD: {
+    type: [String, null],
+    required: true
+  },
+  // Number with a default value
+  propE: {
+    type: Number,
+    default: 100
+  },
+  // Object with a default value
+  propF: {
+    type: Object,
+    // Object or array defaults must be returned from
+    // a factory function. The function receives the raw
+    // props received by the component as the argument.
+    default(rawProps) {
+      return { message: 'hello' }
+    }
+  },
+  // Custom validator function
+  // full props passed as 2nd argument in 3.4+
+  propG: {
+    validator(value, props) {
+      // The value must match one of these strings
+      return ['success', 'warning', 'danger'].includes(value)
+    }
+  },
+  // Function with a default value
+  propH: {
+    type: Function,
+    // Unlike object or array default, this is not a factory
+    // function - this is a function to serve as a default value
+    default() {
+      return 'Default function'
+    }
+  }
+})
+```
