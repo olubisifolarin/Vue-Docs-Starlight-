@@ -109,3 +109,61 @@ export default {
   }
 }
 ```
+
+The `emits` option and `defineEmits()` macro also support an object syntax. If using TypeScript you can type arguments, which allows us to perform runtime validation of the payload of the emitted events:
+
+```
+<script setup lang="ts">
+const emit = defineEmits({
+  submit(payload: { email: string, password: string }) {
+    // return `true` or `false` to indicate
+    // validation pass / fail
+  }
+})
+</script>
+```
+
+If you are using TypeScript with `<script setup>`, it's also possible to declare emitted events using pure type annotations:
+
+```
+<script setup lang="ts">
+const emit = defineEmits<{
+  (e: 'change', id: number): void
+  (e: 'update', value: string): void
+}>()
+</script>
+```
+
+Although optional, it is recommended to define all emitted events in order to better document how a component should work. It also allows Vue to exclude known listeners from fallthrough attributes, avoiding edge cases caused by DOM events manually dispatched by 3rd party code.
+
+:::tip[TIP]
+If a native event (e.g., `click`) is defined in the `emits` option, the listener will now only listen to component-emitted `click` events and no longer respond to native `click` events.
+:::
+
+### Events Validation​
+Similar to prop type validation, an emitted event can be validated if it is defined with the object syntax instead of the array syntax.
+
+To add validation, the event is assigned a function that receives the arguments passed to the `emit` call and returns a boolean to indicate whether the event is valid or not.
+
+```
+<script setup>
+const emit = defineEmits({
+  // No validation
+  click: null,
+
+  // Validate submit event
+  submit: ({ email, password }) => {
+    if (email && password) {
+      return true
+    } else {
+      console.warn('Invalid submit event payload!')
+      return false
+    }
+  }
+})
+
+function submitForm(email, password) {
+  emit('submit', { email, password })
+}
+</script>
+```
