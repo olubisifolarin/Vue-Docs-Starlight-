@@ -64,3 +64,48 @@ function increaseCount(n) {
 :::tip[TIP]
 All extra arguments passed to $emit() after the event name will be forwarded to the listener. For example, with $emit('foo', 1, 2, 3) the listener function will receive three arguments.
 :::
+
+### Declaring Emitted Events​
+A component can explicitly declare the events it will emit using the `defineEmits()` macro:
+
+```
+<script setup>
+defineEmits(['inFocus', 'submit'])
+</script>
+```
+
+The `$emit` method that we used in the `<template>` isn't accessible within the `<script setup>` section of a component, but `defineEmits()` returns an equivalent function that we can use instead:
+
+```
+<script setup>
+const emit = defineEmits(['inFocus', 'submit'])
+
+function buttonClick() {
+  emit('submit')
+}
+</script>
+```
+
+The `defineEmits()` macro cannot be used inside a function, it must be placed directly within `<script setup>`, as in the example above.
+
+If you're using an explicit setup function instead of `<script setup>`, events should be declared using the `emits` option, and the `emit` function is exposed on the `setup()` context:
+
+```
+export default {
+  emits: ['inFocus', 'submit'],
+  setup(props, ctx) {
+    ctx.emit('submit')
+  }
+}
+```
+
+As with other properties of the `setup()` context, `emit` can safely be destructured:
+
+```
+export default {
+  emits: ['inFocus', 'submit'],
+  setup(props, { emit }) {
+    emit('submit')
+  }
+}
+```
