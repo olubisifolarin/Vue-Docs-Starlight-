@@ -27,3 +27,40 @@ The `.once` modifier is also supported on component event listeners:
 ```
 
 Like components and props, event names provide an automatic case transformation. Notice we emitted a camelCase event, but can listen for it using a kebab-cased listener in the parent. As with [props casing](/componenet/props), we recommend using kebab-cased event listeners in templates.
+
+:::tip[TIP]
+
+Unlike native DOM events, component emitted events do not bubble. You can only listen to the events emitted by a direct child component. If there is a need to communicate between sibling or deeply nested components, use an external event bus or a global state management solution.
+:::
+
+### Event Arguments​
+It's sometimes useful to emit a specific value with an event. For example, we may want the `<BlogPost>` component to be in charge of how much to enlarge the text by. In those cases, we can pass extra arguments to `$emit` to provide this value:
+
+```
+<button @click="$emit('increaseBy', 1)">
+  Increase by 1
+</button>
+```
+Then, when we listen to the event in the parent, we can use an inline arrow function as the listener, which allows us to access the event argument:
+
+```
+<MyButton @increase-by="(n) => count += n" />
+```
+
+Or, if the event handler is a method:
+
+```
+<MyButton @increase-by="increaseCount" />
+```
+
+Then the value will be passed as the first parameter of that method:
+
+```
+function increaseCount(n) {
+  count.value += n
+}S
+```
+
+:::tip[TIP]
+All extra arguments passed to $emit() after the event name will be forwarded to the listener. For example, with $emit('foo', 1, 2, 3) the listener function will receive three arguments.
+:::
