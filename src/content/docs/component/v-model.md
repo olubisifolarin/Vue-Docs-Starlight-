@@ -70,3 +70,44 @@ const emit = defineEmits(['update:modelValue'])
   />
 </template>
 ```
+
+Then, `v-model="foo"` in the parent component will be compiled to:
+
+```
+<!-- Parent.vue -->
+<Child
+  :modelValue="foo"
+  @update:modelValue="$event => (foo = $event)"
+/>
+```
+
+As you can see, it is quite a bit more verbose. However, it is helpful to understand what is happening under the hood.
+
+Because `defineModel` declares a prop, you can therefore declare the underlying prop's options by passing it to `defineModel`:
+
+```
+// making the v-model required
+const model = defineModel({ required: true })
+
+// providing a default value
+const model = defineModel({ default: 0 })
+```
+
+:::TIP[WARNING]
+If you have a `default` value for `defineModel` prop and you don't provide any value for this prop from the parent component, it can cause a de-synchronization between parent and child components. In the example below, the parent's `myRef` is undefined, but the child's `model` is 1:
+
+Child component:
+
+```
+const model = defineModel({ default: 1 })
+```
+
+Parent component:
+```
+const myRef = ref()
+```
+
+```
+<Child v-model="myRef"></Child>
+```
+:::
