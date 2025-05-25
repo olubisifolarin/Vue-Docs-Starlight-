@@ -146,3 +146,88 @@ const title = defineModel('title', { required: true })
 By leveraging the ability to target a particular prop and event as we learned before with `v-model` [arguments](/component/v-model), we can now create multiple `v-model` bindings on a single component instance.
 
 Each `v-model` will sync to a different prop, without the need for extra options in the component:
+
+```
+<UserName
+  v-model:first-name="first"
+  v-model:last-name="last"
+/>
+```
+
+```
+<script setup>
+const firstName = defineModel('firstName')
+const lastName = defineModel('lastName')
+</script>
+
+<template>
+  <input type="text" v-model="firstName" />
+  <input type="text" v-model="lastName" />
+</template>
+```
+
+### Handling v-model Modifiers​
+When we were learning about form input bindings, we saw that `v-model` has built-in modifiers - `.trim`, `.number` and `.lazy`. In some cases, you might also want the `v-model` on your custom input component to support custom modifiers.
+
+Let's create an example custom modifier, `capitalize`, that capitalizes the first letter of the string provided by the `v-model` binding:
+
+```
+<MyComponent v-model.capitalize="myText" />
+```
+
+Modifiers added to a component `v-model` can be accessed in the child component by destructuring the `defineModel()` return value like this:
+
+```
+<script setup>
+const [model, modifiers] = defineModel()
+
+console.log(modifiers) // { capitalize: true }
+</script>
+
+<template>
+  <input type="text" v-model="model" />
+</template>
+```
+
+To conditionally adjust how the value should be read / written based on modifiers, we can pass `get` and `set` options to `defineModel()`. These two options receive the value on get / set of the model ref and should return a transformed value. This is how we can use the `set` option to implement the `capitalize` modifier:
+
+```
+<script setup>
+const [model, modifiers] = defineModel({
+  set(value) {
+    if (modifiers.capitalize) {
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+    return value
+  }
+})
+</script>
+
+<template>
+  <input type="text" v-model="model" />
+</template>
+```
+</br>
+<a href="https://play.vuejs.org/" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
+  ▶️ Try in the playground
+</a>
+
+### Modifiers for v-model with Arguments​
+Here's another example of using modifiers with multiple `v-model` with different arguments:
+
+```
+<UserName
+  v-model:first-name.capitalize="first"
+  v-model:last-name.uppercase="last"
+/>
+```
+
+```
+<script setup>
+const [firstName, firstNameModifiers] = defineModel('firstName')
+const [lastName, lastNameModifiers] = defineModel('lastName')
+
+console.log(firstNameModifiers) // { capitalize: true }
+console.log(lastNameModifiers) // { uppercase: true }
+</script>
+```
