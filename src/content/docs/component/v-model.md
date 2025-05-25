@@ -93,7 +93,7 @@ const model = defineModel({ required: true })
 const model = defineModel({ default: 0 })
 ```
 
-:::TIP[WARNING]
+:::warning[WARNING]
 If you have a `default` value for `defineModel` prop and you don't provide any value for this prop from the parent component, it can cause a de-synchronization between parent and child components. In the example below, the parent's `myRef` is undefined, but the child's `model` is 1:
 
 Child component:
@@ -111,3 +111,36 @@ const myRef = ref()
 <Child v-model="myRef"></Child>
 ```
 :::
+
+### `v-model` Arguments​
+`v-model` on a component can also accept an argument:
+
+```
+<MyComponent v-model:title="bookTitle" />
+```
+In the child component, we can support the corresponding argument by passing a string to `defineModel()` as its first argument:
+
+```
+<!-- MyComponent.vue -->
+<script setup>
+const title = defineModel('title')
+</script>
+
+<template>
+  <input type="text" v-model="title" />
+</template>
+```
+<a href="https://play.vuejs.org/" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
+  ▶️ Try in the playground
+</a>
+
+If prop options are also needed, they should be passed after the model name:
+
+```
+const title = defineModel('title', { required: true })
+```
+
+### Multiple v-model Bindings​
+By leveraging the ability to target a particular prop and event as we learned before with `v-model` [arguments](/component/v-model/v-model Arguments), we can now create multiple v-model bindings on a single component instance.
+
+Each `v-model` will sync to a different prop, without the need for extra options in the component:
