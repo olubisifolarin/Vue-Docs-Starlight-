@@ -136,4 +136,26 @@ The warning will be suppressed if $attrs is explicitly bound:
 <footer>...</footer>
 ```
 
+### Accessing Fallthrough Attributes in JavaScript​
+If needed, you can access a component's fallthrough attributes in `<script setup>` using the `useAttrs()` API:
 
+```
+<script setup>
+import { useAttrs } from 'vue'
+
+const attrs = useAttrs()
+</script>
+```
+
+If not using `<script setup>`, `attrs` will be exposed as a property of the `setup()` context:
+
+```
+export default {
+  setup(props, ctx) {
+    // fallthrough attributes are exposed as ctx.attrs
+    console.log(ctx.attrs)
+  }
+}
+```
+
+Note that although the `attrs` object here always reflects the latest fallthrough attributes, it isn't reactive (for performance reasons). You cannot use watchers to observe its changes. If you need reactivity, use a prop. Alternatively, you can use `onUpdated()` to perform side effects with the latest `attrs` on each update.
