@@ -44,7 +44,7 @@ const model = defineModel()
   <input v-model="model" />
 </template>
 ```
-
+</br>
 <a href="https://play.vuejs.org/" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
   ▶️ Try in the playground
 </a>
@@ -130,6 +130,8 @@ const title = defineModel('title')
   <input type="text" v-model="title" />
 </template>
 ```
+
+</br>
 <a href="https://play.vuejs.org/" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
   ▶️ Try in the playground
 </a>
@@ -141,6 +143,6 @@ const title = defineModel('title', { required: true })
 ```
 
 ### Multiple v-model Bindings​
-By leveraging the ability to target a particular prop and event as we learned before with `v-model` [arguments](/component/v-model/v-model Arguments), we can now create multiple v-model bindings on a single component instance.
+By leveraging the ability to target a particular prop and event as we learned before with `v-model` [arguments](/component/v-model), we can now create multiple `v-model` bindings on a single component instance.
 
 Each `v-model` will sync to a different prop, without the need for extra options in the component:
