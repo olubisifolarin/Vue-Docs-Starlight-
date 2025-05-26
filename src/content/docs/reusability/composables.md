@@ -122,3 +122,53 @@ export function useMouse() {
 Each component instance calling `useMouse()` will create its own copies of x and y state so they won't interfere with one another. If you want to manage shared state between components, read the [State Management]() chapter.
 :::
 
+### Async State Example​
+The `useMouse()` composable doesn't take any arguments, so let's take a look at another example that makes use of one. When doing async data fetching, we often need to handle different states: loading, success, and error:
+
+```
+<script setup>
+import { ref } from 'vue'
+
+const data = ref(null)
+const error = ref(null)
+
+fetch('...')
+  .then((res) => res.json())
+  .then((json) => (data.value = json))
+  .catch((err) => (error.value = err))
+</script>
+
+<template>
+  <div v-if="error">Oops! Error encountered: {{ error.message }}</div>
+  <div v-else-if="data">
+    Data loaded:
+    <pre>{{ data }}</pre>
+  </div>
+  <div v-else>Loading...</div>
+</template>
+```
+
+It would be tedious to have to repeat this pattern in every component that needs to fetch data. Let's extract it into a composable:
+
+```
+// fetch.js
+import { ref } from 'vue'
+
+export function useFetch(url) {
+  const data = ref(null)
+  const error = ref(null)
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((json) => (data.value = json))
+    .catch((err) => (error.value = err))
+
+  return { data, error }
+}
+```
+
+Now in our component we can just do:
+
+```
+
+```
