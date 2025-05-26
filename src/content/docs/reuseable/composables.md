@@ -1,6 +1,6 @@
 ---
-title: Composable
-description: Composable
+title: Composables
+description: Composables
 ---
 :::tip[TIP]
 This section assumes basic knowledge of Composition API. If you have been learning Vue with Options API only, you can set the API Preference to Composition API (using the toggle at the top of the left sidebar) and re-read the [Reactivity Fundamentals](/essentials/reactivity) and Lifecycle Hooks chapters.
@@ -79,6 +79,8 @@ const { x, y } = useMouse()
 <a href="https://play.vuejs.org/" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
   ▶️ Try it in the playground
 </a>
+
+</br>
 
 As we can see, the core logic remains identical - all we had to do was move it into an external function and return the state that should be exposed. Just like inside a component, you can use the full range of Composition API functions in composables. The same `useMouse()` functionality can now be used in any component.
 

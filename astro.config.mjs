@@ -5,7 +5,7 @@ import starlight from '@astrojs/starlight';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://olubisifolarin.github.io/Vue-Docs-Starlight-/',
-  	base: '',
+  	base: 'Vue-Docs-Starlight-/',
 	integrations: [
 		starlight({
 			title: 'Vue.js',
@@ -28,7 +28,7 @@ export default defineConfig({
 				},
 				{
 				  label: 'Reusability',
-				  autogenerate: { directory: 'reusability' },
+				  autogenerate: { directory: 'reuseable' },
 				},
 			  ],
 				
