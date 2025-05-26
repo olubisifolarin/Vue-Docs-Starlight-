@@ -234,3 +234,36 @@ Notice that `toValue(url)` is called inside the `watchEffect` callback. This ens
 This version of `useFetch()` now accepts static URL strings, refs, and getters, making it much more flexible. The watch effect will run immediately, and will track any dependencies accessed during `toValue(url)`. If no dependencies are tracked (e.g. url is already a string), the effect runs only once; otherwise, it will re-run whenever a tracked dependency changes.
 
 Here's the ▶️ [Watch a free updated version of](https://play.vuejs.org/) `useFetch()`, with an artificial delay and randomized error for demo purposes.
+
+### Conventions and Best Practices​
+#### Naming​
+It is a convention to name composable functions with camelCase names that start with "use".
+
+#### Input Arguments​
+A composable can accept ref or getter arguments even if it doesn't rely on them for reactivity. If you are writing a composable that may be used by other developers, it's a good idea to handle the case of input arguments being refs or getters instead of raw values. The `toValue()` utility function will come in handy for this purpose:
+
+```
+import { toValue } from 'vue'
+
+function useFeature(maybeRefOrGetter) {
+  // If maybeRefOrGetter is a ref or a getter,
+  // its normalized value will be returned.
+  // Otherwise, it is returned as-is.
+  const value = toValue(maybeRefOrGetter)
+}
+```
+
+If your composable creates reactive effects when the input is a ref or a getter, make sure to either explicitly watch the ref / getter with `watch()`, or call `toValue()` inside a `watchEffect()` so that it is properly tracked.
+
+The `useFetch()` implementation discussed earlier provides a concrete example of a composable that accepts refs, getters and plain values as input argument.
+
+### Return Values​
+You have probably noticed that we have been exclusively using `ref()` instead of `reactive()` in composables. The recommended convention is for composables to always return a plain, non-reactive object containing multiple refs. This allows it to be destructured in components while retaining reactivity:
+
+```
+// x and y are refs
+const { x, y } = useMouse()
+```
+Returning a reactive object from a composable will cause such destructures to lose the reactivity connection to the state inside the composable, while the refs will retain that connection.
+
+If you prefer to use returned state from composables as object properties, you can wrap the returned object with `reactive()` so that the refs are unwrapped. For example:
