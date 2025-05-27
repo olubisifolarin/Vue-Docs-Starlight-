@@ -30,6 +30,10 @@ export default defineConfig({
 				  label: 'Reusability',
 				  autogenerate: { directory: 'reuseable' },
 				},
+				{
+				  label: 'Built-in Components',
+				  autogenerate: { directory: 'built-in-comp' },
+				},
 			  ],
 				
 		}),
