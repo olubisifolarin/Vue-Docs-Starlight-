@@ -346,3 +346,118 @@ With `:css="false"`, we are also fully responsible for controlling when the tran
 
 Here's a demo using the [GSAP](https://gsap.com/) library to perform the animations. You can, of course, use any other animation library you want, for example [Anime.js](https://animejs.com/) or [Motion One](https://motion.dev/):
 
+</br>
+<a href="https://play.vuejs.org/#eNqNVF1v0zAU/SsmCHWT2iTrNjGFboyhPYAQQ7AHkPLiJjepV8e2bKfrVPW/c+0kbTJBt6fG536c43NvvQk+KRWuagiSYGYyzZQlBmytrlLBKiW1JRuioSBbUmhZkRGmjnah0lDV4u4TA6nIpDDYYyEfyaWrPLK6hmMXKWqRWSYFkeIGCqnhVljQR8CPySYVxHcLkRyRcYMQYjLK4XdC4nB6Pu5BfwaQVDRj9ikhJ+68Rbat+xhQdmRjkksBfUor+4x5rakrwWZ9QtQwOKOA7rxnbwGgBhIyAk6NZVnIxF1tj6bh+ZicHI+6IvFZVoqDxUwnqCd8IPsb0BUMZaf2oOw4fP9K4euEnMbxa0R36l5wDEfSdsuxDzoSY/0zkzq+AwbMomYTcQfxYAHTqAU8ETKb19aiMdcZZ9nyMg3aRXvjftPg6l6WJYdZ1KT5Blh0r6kwzGlsuK/nfv8m4HYCmwwWMg3apH10iHM3Eo/74XR4khmDaEG5aTGvGOlztiIZ+urCzr/JXK7TgKwmrGhvgMpnEaY1d4z2ehGYRT0H8GjsE3efYdeqmcOcZstSy1rkCXl7Np1fXJx+cHhFdcnExEqVkGms1h58ZLlduOm35wWwcmF7wFzqHPRE05zVJiHn8TuEm9G09ME4aF6BSYUb8WCkwCfEK0nbgEmDpNuR5uIOSIOFtcokUVQLtSzDTFaRi32sZF7z1jlk2iKBNfiaFKx81h5LFOOg75SzaEhDOZePXz3mHp522bBmAdnyH/iDwVE4VT80GNBunLuYRevANuHbX99hjd+7YCf3QPAnGMlrv3Y+7QaHg7J7eV7tF+8WE+W9uV1bwMm3l3JCvRs+Pw3w7XX/mf9dfS/3NDzbubj9C6SW58o=" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
+  ▶️ Try it in the playground
+</a>
+
+### Reusable Transitions​
+Transitions can be reused through Vue's component system. To create a reusable transition, we can create a component that wraps the ```<Transition>` component and passes down the slot content:
+
+```
+<!-- MyTransition.vue -->
+<script>
+// JavaScript hooks logic...
+</script>
+
+<template>
+  <!-- wrap the built-in Transition component -->
+  <Transition
+    name="my-transition"
+    @enter="onEnter"
+    @leave="onLeave">
+    <slot></slot> <!-- pass down slot content -->
+  </Transition>
+</template>
+
+<style>
+/*
+  Necessary CSS...
+  Note: avoid using <style scoped> here since it
+  does not apply to slot content.
+*/
+</style>
+```
+Now `MyTransition` can be imported and used just like the built-in version:
+
+```
+<MyTransition>
+  <div v-if="show">Hello</div>
+</MyTransition>
+```
+
+### Transition on Appear​
+If you also want to apply a transition on the initial render of a node, you can add the `appear` prop:
+
+```
+<Transition appear>
+  ...
+</Transition>
+```
+
+### Transition Between Elements​
+In addition to toggling an element with `v-if` / `v-show`, we can also transition between two elements using `v-if` / `v-else` / `v-else-if`, as long as we make sure that there is only one element being shown at any given moment:
+
+```
+<Transition>
+  <button v-if="docState === 'saved'">Edit</button>
+  <button v-else-if="docState === 'edited'">Save</button>
+  <button v-else-if="docState === 'editing'">Cancel</button>
+</Transition>
+```
+<br />
+<a href="https://play.vuejs.org/#eNqdVE1vEzEQ/SuWL2mlblJauCybCKh6gAMg0gvSXhzvJHHjtS17NiSK8t8Z2/kqhCpiT2PPm/fmw7Mb/tG5/rIDXvIqSK8csgDYuVFtVOusR7ZhHqZsy6betqxH0F5taiOtCcgaK8coENgwgq56QSyh6V3XphpkMqKhA0LrNMHiCavghGEB1xqGNW+FnylTeDWbY8nubt2q5qMHreSCoWVyLTUwnHvbzeYUQxyhJG5iIC7GqkYtmdQiBKKaoCkoLRTKgCeWKEZyT16YoFBZw4xoo2bQqoGicwnD0ldNOkRCLAs1JcSxruGQ7aqq+R68/z7ImOcLOOtBozChR49kVYNMfEYIdIBzageCi+WUmUW9MaX5n3qZ4SLBfTNGD8JI0H8IVoNju/OEBjQisqrB6SMwVZo/mf0XU2ObGNOoQMh1yZTRdFtMtJWL99HjbKYu6bkRl1pCup5Dfj5voKXzNgrsyk58xygxCVZ3GKMSqr9/CgUYBF8IGTlvTh0aqOCdI9PhoUIi1Jrd9u/eBQaC2ms7/Bd1Wp8Ub52QCqm825R8opta35bZjD36eXVPm3D9N1fOhjbjcqbihIpWJ/Wd33AM1PWpmvWfgzW0/Ymw5tK2Tmnw31wsMNS8zFLRR8XaX1/SHfoutinfyznIxZn750DLXJLx3UMAv4SaH3xIew+Y3Y/jr7Ai++BsbdNpQr/i/AFpkpRjhn3qTENpn+BStp/TP4ye91N4XCHQ3HZFxUQjcpvwNaf/2sMrpR/Tve+/TXHUT779DQLawaI=" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
+  ▶️ Try it in the playground
+</a>
+
+### Transition Modes​
+In the previous example, the entering and leaving elements are animated at the same time, and we had to make them `position: absolute` to avoid the layout issue when both elements are present in the DOM.
+
+However, in some cases this isn't an option, or simply isn't the desired behavior. We may want the leaving element to be animated out first, and for the entering element to only be inserted after the leaving animation has finished. Orchestrating such animations manually would be very complicated - luckily, we can enable this behavior by passing `<Transition>` a `mode` prop:
+
+```
+<Transition mode="out-in">
+  ...
+</Transition>
+```
+`<Transition>` also supports `mode="in-out"`, although it's much less frequently used.
+
+### Dynamic Transitions​
+`<Transition>` props like `name` can also be dynamic! It allows us to dynamically apply different transitions based on state change:
+
+```
+<Transition :name="transitionName">
+  <!-- ... -->
+</Transition>
+```
+
+This can be useful when you've defined CSS transitions / animations using Vue's transition class conventions and want to switch between them.
+
+You can also apply different behavior in JavaScript transition hooks based on the current state of your component. Finally, the ultimate way of creating dynamic transitions is through reusable transition components that accept props to change the nature of the transition(s) to be used. It may sound cheesy, but the only limit really is your imagination.
+
+### Transitions with the Key Attribute​
+Sometimes you need to force the re-render of a DOM element in order for a transition to occur.
+
+Take this counter component for example:
+
+```
+<script setup>
+import { ref } from 'vue';
+const count = ref(0);
+
+setInterval(() => count.value++, 1000);
+</script>
+
+<template>
+  <Transition>
+    <span :key="count">{{ count }}</span>
+  </Transition>
+</template>
+```
+
+If we had excluded the `key` attribute, only the text node would be updated and thus no transition would occur. However, with the `key` attribute in place, Vue knows to create a new `span` element whenever `count` changes and thus the `Transition` component has 2 different elements to transition between.
+
+<br />
+<a href="https://play.vuejs.org/#eNp9UsFu2zAM/RVCl6Zo4nhYd/GcAtvQQ3fYhq1HXTSFydTKkiDJbjLD/z5KMrKgLXoTHx/5+CiO7JNz1dAja1gbpFcuQsDYuxtuVOesjzCCxx1MsPO2gwuiXnzkhhtpTYggbW8ibBJlUV/mBJXfmYh+EHqxuITNDYzcQGFWBPZ4dUXEaQnv6jrXtOuiTJoUROycFhEpAmi3agCpRQgbzp68cA49ZyV174UJKiprckxIcMJA84hHImc9oo7jPOQ0kQ4RSvH6WXW7JiV6teszfQpDPGqEIK3DLSGpQbazsyaugvqLDVx77JIhbqp5wsxwtrRvPFI7NWDhEGtYYVrQSsgELzOiUQw4I2Vh8TRgA9YJqeIR6upDABQh9TpTAPE7WN3HlxLp084Foi3N54YN1KWEVpOMkkO2ZJHsmp3aVw/BGjqMXJE22jml0X93STRw1pReKSe0tk9fMxZ9nzwVXP5B+fgK/hAOCePsh8dAt4KcnXJR+D3S16X07a9veKD3KdnZba+J/UbyJ+Zl0IyF9rk3Wxr7jJenvcvnrcz+PtweItKuZ1Np0MScMp8zOvkvb1j/P+776jrX0UbZ9A+fYSTP" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
+  ▶️ Try it in the playground
+</a>
