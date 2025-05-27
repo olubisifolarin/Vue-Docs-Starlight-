@@ -42,3 +42,36 @@ export default {
   }
 }
 ```
+
+It is also common to globally register custom directives at the app level:
+
+```
+const app = createApp({})
+
+// make v-highlight usable in all components
+app.directive('highlight', {
+  /* ... */
+})
+```
+
+### When to use custom directives​
+Custom directives should only be used when the desired functionality can only be achieved via direct DOM manipulation.
+
+A common example of this is a `v-focus` custom directive that brings an element into focus.
+
+```
+<script setup>
+// enables v-focus in templates
+const vFocus = {
+  mounted: (el) => el.focus()
+}
+</script>
+
+<template>
+  <input v-focus />
+</template>s
+```
+
+This directive is more useful than the `autofocus` attribute because it works not just on page load - it also works when the element is dynamically inserted by Vue!
+
+Declarative templating with built-in directives such as `v-bind` is recommended when possible because they are more efficient and server-rendering friendly.
