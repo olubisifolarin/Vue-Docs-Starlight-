@@ -88,3 +88,34 @@ app.use(i18nPlugin, {
 ```
 
 Now, our initial expression `$translate('greetings.hello')` will be replaced by Bonjour! at runtime.
+
+:::tip[TIP]
+Use global properties scarcely, since it can quickly become confusing if too many global properties injected by different plugins are used throughout an app.
+:::
+
+#### Provide / Inject with Plugins​
+Plugins also allow us to use `provide` to give plugin users access to a function or attribute. For example, we can allow the application to have access to the `options` parameter to be able to use the translations object.
+
+```
+// plugins/i18n.js
+export default {
+  install: (app, options) => {
+    app.provide('i18n', options)
+  }
+}
+```
+
+Plugin users will now be able to inject the plugin options into their components using the `i18n` key:
+
+```
+<script setup>
+import { inject } from 'vue'
+
+const i18n = inject('i18n')
+
+console.log(i18n.greetings.hello)
+</script>
+```
+
+#### Bundle for NPM​
+If you further want to build and publish your plugin for others to use, see [Vite's section on Library Mode](https://vite.dev/guide/build.html#library-mode).
