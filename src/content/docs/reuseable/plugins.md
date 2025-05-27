@@ -54,3 +54,37 @@ We want to create a translation function. This function will receive a dot-delim
 ```
 <h1>{{ $translate('greetings.hello') }}</h1>
 ```
+
+Since this function should be globally available in all templates, we will make it so by attaching it to `app.config.globalProperties` in our plugin:
+
+```
+// plugins/i18n.js
+export default {
+  install: (app, options) => {
+    // inject a globally available $translate() method
+    app.config.globalProperties.$translate = (key) => {
+      // retrieve a nested property in `options`
+      // using `key` as the path
+      return key.split('.').reduce((o, i) => {
+        if (o) return o[i]
+      }, options)
+    }
+  }
+}
+```
+
+Our `$translate` function will take a string such as `greetings.hello`, look inside the user provided configuration and return the translated value.
+
+The object containing the translated keys should be passed to the plugin during installation via additional parameters to `app.use()`:
+
+```
+import i18nPlugin from './plugins/i18n'
+
+app.use(i18nPlugin, {
+  greetings: {
+    hello: 'Bonjour!'
+  }
+})
+```
+
+Now, our initial expression `$translate('greetings.hello')` will be replaced by Bonjour! at runtime.
