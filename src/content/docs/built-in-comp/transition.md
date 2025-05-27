@@ -262,3 +262,87 @@ If necessary, you can also specify separate values for enter and leave durations
 ```
 <Transition :duration="{ enter: 500, leave: 800 }">...</Transition>
 ```
+
+### Performance Considerations​
+You may notice that the animations shown above are mostly using properties like `transform` and `opacity`. These properties are efficient to animate because:
+
+They do not affect the document layout during the animation, so they do not trigger expensive CSS layout calculation on every animation frame.
+
+1. Most modern browsers can leverage GPU hardware acceleration when animating `transform`.
+
+2. In comparison, properties like `height` or `margin` will trigger CSS layout, so they are much more expensive to animate, and should be used with caution.
+
+### JavaScript Hooks​
+You can hook into the transition process with JavaScript by listening to events on the `<Transition>` component:
+
+```
+<Transition
+  @before-enter="onBeforeEnter"
+  @enter="onEnter"
+  @after-enter="onAfterEnter"
+  @enter-cancelled="onEnterCancelled"
+  @before-leave="onBeforeLeave"
+  @leave="onLeave"
+  @after-leave="onAfterLeave"
+  @leave-cancelled="onLeaveCancelled"
+>
+  <!-- ... -->
+</Transition>
+```
+
+```
+// called before the element is inserted into the DOM.
+// use this to set the "enter-from" state of the element
+function onBeforeEnter(el) {}
+
+// called one frame after the element is inserted.
+// use this to start the entering animation.
+function onEnter(el, done) {
+  // call the done callback to indicate transition end
+  // optional if used in combination with CSS
+  done()
+}
+
+// called when the enter transition has finished.
+function onAfterEnter(el) {}
+
+// called when the enter transition is cancelled before completion.
+function onEnterCancelled(el) {}
+
+// called before the leave hook.
+// Most of the time, you should just use the leave hook
+function onBeforeLeave(el) {}
+
+// called when the leave transition starts.
+// use this to start the leaving animation.
+function onLeave(el, done) {
+  // call the done callback to indicate transition end
+  // optional if used in combination with CSS
+  done()
+}
+
+// called when the leave transition has finished and the
+// element has been removed from the DOM.
+function onAfterLeave(el) {}
+
+// only available with v-show transitions
+function onLeaveCancelled(el) {}
+```
+
+These hooks can be used in combination with CSS transitions / animations or on their own.
+
+When using JavaScript-only transitions, it is usually a good idea to add the `:css="false"` prop. This explicitly tells Vue to skip auto CSS transition detection. Aside from being slightly more performant, this also prevents CSS rules from accidentally interfering with the transition:
+
+```
+<Transition
+  ...
+  :css="false"
+>
+  ...
+</Transition>
+```
+
+With `:css="false"`, we are also fully responsible for controlling when the transition ends. In this case, the done callbacks are required for the `@enter` and `@leave` hooks. Otherwise, the hooks will be called synchronously and the transition will finish immediately.
+
+Here's a demo using the [GSAP](https://gsap.com/) library to perform the animations. You can, of course, use any other animation library you want, for example [Anime.js](https://animejs.com/) or [Motion One](https://motion.dev/):
+
