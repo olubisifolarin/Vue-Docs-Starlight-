@@ -26,3 +26,42 @@ Consider the following HTML structure.
   </div>
 </div>
 ```
+And here is the implementation of `<MyModal>`:
+
+```
+<script setup>
+import { ref } from 'vue'
+
+const open = ref(false)
+</script>
+
+<template>
+  <button @click="open = true">Open Modal</button>
+
+  <div v-if="open" class="modal">
+    <p>Hello from the modal!</p>
+    <button @click="open = false">Close</button>
+  </div>
+</template>
+
+<style scoped>
+.modal {
+  position: fixed;
+  z-index: 999;
+  top: 20%;
+  left: 50%;
+  width: 300px;
+  margin-left: -150px;
+}
+</style>
+```
+
+The component contains a `<button>` to trigger the opening of the modal, and a `<div>` with a class of `.modal`, which will contain the modal's content and a button to self-close.
+
+When using this component inside the initial HTML structure, there are a number of potential issues:
+
+position: fixed only places the element relative to the viewport when no ancestor element has transform, perspective or filter property set. If, for example, we intend to animate the ancestor <div class="outer"> with a CSS transform, it would break the modal layout!
+
+The modal's z-index is constrained by its containing elements. If there is another element that overlaps with <div class="outer"> and has a higher z-index, it would cover our modal.
+
+<Teleport> provides a clean way to work around these, by allowing us to break out of the nested DOM structure. Let's modify <MyModal> to use <Teleport>:
