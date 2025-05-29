@@ -35,7 +35,7 @@ Creating fresh component instance on switch is normally useful behavior, but in 
   ▶️ Try it in the payground
 </a>
 
-<br></br>
+##
 
 :::tip[TIP]
 When used in in-DOM templates, it should be referenced as `<keep-alive>`

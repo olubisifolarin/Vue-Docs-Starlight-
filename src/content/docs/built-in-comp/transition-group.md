@@ -10,7 +10,7 @@ description: TransitionGroup
 
 - By default, it doesn't render a wrapper element. But you can specify an element to be rendered with the `tag` prop.
 
-- [Transition modes](/built-in-group/transition) are not available, because we are no longer alternating between mutually exclusive elements.
+- [Transition modes](/Vue-Docs-Starlight-/built-in-comp/transition) are not available, because we are no longer alternating between mutually exclusive elements.
 
 - Elements inside are **always required** to have a unique `key` attribute.
 
