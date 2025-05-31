@@ -115,7 +115,7 @@ The above link loads the *global build* of Vue, where all top-level APIs are exp
 </script>
 ```
 
-#### [CodePen Demo >](https://codepen.io/vuejs-examples/pen/eYQpQEG)
+##### [CodePen Demo >](https://codepen.io/vuejs-examples/pen/eYQpQEG)
 
 :::note[TIP]
 
@@ -144,7 +144,7 @@ Throughout the rest of the documentation, we will be primarily using [ES modules
 
 Notice that we are using `<script type="module">`, and the imported CDN URL is pointing to the ES modules build of Vue instead.
 
-#### [CodePen Demo >](https://codepen.io/vuejs-examples/pen/MWzazEv)
+##### [CodePen Demo >](https://codepen.io/vuejs-examples/pen/MWzazEv)
 
 ### Enabling Import maps​
 In the above example, we are importing from the full CDN URL, but in the rest of the documentation you will see code like this:
@@ -180,7 +180,7 @@ We can teach the browser where to locate the `vue` import by using [Import Maps]
 </script>
 ```
 
-#### [CodePen Demo >](https://codepen.io/vuejs-examples/pen/MWzazEv)
+##### [CodePen Demo >](https://codepen.io/vuejs-examples/pen/MWzazEv)
 
 You can also add entries for other dependencies to the import map - but make sure they point to the ES modules version of the library you intend to use.
 

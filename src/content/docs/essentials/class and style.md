@@ -60,7 +60,7 @@ This will render:
 <div class="active"></div>
 ```
 
-We can also bind to a [computed property](/essentials/computed) that returns an object. This is a common and powerful pattern:
+We can also bind to a [computed property](/Vue-Docs-Starlight-/essentials/computed) that returns an object. This is a common and powerful pattern:
 
 ```
 const isActive = ref(true)
