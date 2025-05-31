@@ -159,7 +159,7 @@ Will render:
 <p class="baz">Hi!</p>
 <span>This is a child component</span>
 ```
-You can learn more about component attribute inheritance in [Fallthrough Attributes section](Vue-Docs-Starlight-/component/fall-attribute).
+You can learn more about component attribute inheritance in [Fallthrough Attributes section](/Vue-Docs-Starlight-/component/fall-attribute).
 
 ### Binding Inline Styles​
 #
