@@ -34,6 +34,10 @@ export default defineConfig({
 				  label: 'Built-in Components',
 				  autogenerate: { directory: 'built-in-comp' },
 				},
+				{
+				  label: 'Scaling Up',
+				  autogenerate: { directory: 'scaling-up' },
+				},
 			  ],
 				
 		}),
