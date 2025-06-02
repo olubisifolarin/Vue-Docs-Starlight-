@@ -3,7 +3,7 @@ title: Composables
 description: Composables
 ---
 :::tip[TIP]
-This section assumes basic knowledge of Composition API. If you have been learning Vue with Options API only, you can set the API Preference to Composition API (using the toggle at the top of the left sidebar) and re-read the [Reactivity Fundamentals](/essentials/reactivity) and Lifecycle Hooks chapters.
+This section assumes basic knowledge of Composition API. If you have been learning Vue with Options API only, you can set the API Preference to Composition API (using the toggle at the top of the left sidebar) and re-read the [Reactivity Fundamentals](/Vue-Docs-Starlight-/essentials/reactivity) and Lifecycle Hooks chapters.
 :::
 
 ### What is a "Composable"?​
