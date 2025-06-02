@@ -61,13 +61,11 @@ export default {
 
 `<style>` tags inside SFCs are typically injected as native `<style>` tags during development to support hot updates. For production they can be extracted and merged into a single CSS file.
 
-You can play with SFCs and explore how they are compiled in the
-
-<a href="https://play.vuejs.org/" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
+You can play with SFCs and explore how they are compiled in the <a href="https://play.vuejs.org/" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
   ▶️ Vue SFC Playground.
 </a>
 
-#
+
 In actual projects, we typically integrate the SFC compiler with a build tool such as Vite or Vue CLI (which is based on webpack), and Vue provides official scaffolding tools to get you started with SFCs as fast as possible. Check out more details in the SFC Tooling section. 
 
 
