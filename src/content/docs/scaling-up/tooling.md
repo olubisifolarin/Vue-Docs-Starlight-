@@ -35,3 +35,11 @@ This command will install and execute [create-vue](https://github.com/vuejs/crea
 - To learn more about Vite, check out the Vite docs.
 - To configure Vue-specific behavior in a Vite project, for example passing options to the Vue compiler, check out the docs for [@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#readme).
 Both online playgrounds mentioned above also support downloading files as a Vite project.
+
+#### Vue CLI​
+[Vue CLI](https://cli.vuejs.org/) is the official webpack-based toolchain for Vue. It is now in maintenance mode and we recommend starting new projects with Vite unless you rely on specific webpack-only features. Vite will provide superior developer experience in most cases.
+
+For information on migrating from Vue CLI to Vite:
+
+- [Vue CLI-> Vite Migration Guide from VueSchool.io](https://vueschool.io/articles/vuejs-tutorials/how-to-migrate-from-vue-cli-to-vite/)
+- [Tools / Plugins that help with auto migration](https://github.com/vitejs/awesome-vite#vue-cli)
