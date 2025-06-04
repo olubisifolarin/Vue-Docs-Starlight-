@@ -55,5 +55,31 @@ Our default tooling setups use the runtime-only build since all templates in SFC
 
 If you are looking for a lighter-weight alternative for no-build-step usage, check out petite-vue.
 
-IDE Support​
-The recommended IDE setup is VS Code + the Vue - Official extension (previously Volar). The extension provides syntax highlighting, TypeScript support, and intellisense for template expressions and component props.
+### IDE Support​
+- The recommended IDE setup is [VS Code](https://code.visualstudio.com/) + [the Vue - Official extension (previously Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar). The extension provides syntax highlighting, TypeScript support, and intellisense for template expressions and component props.
+
+:::tip[TIP]
+Vue - Official replaces Vetur, our previous official VS Code extension for Vue 2. If you have Vetur currently installed, make sure to disable it in Vue 3 projects.
+:::
+
+- WebStorm also provides great built-in support for Vue SFCs.
+
+- Other IDEs that support the Language Service Protocol (LSP) can also leverage Volar's core functionalities via LSP:
+
+  - Sublime Text support via LSP-Volar.
+
+  - vim / Neovim support via coc-volar.
+
+  - emacs support via lsp-mode
+
+### Browser Devtools​
+The Vue browser devtools extension allows you to explore a Vue app's component tree, inspect the state of individual components, track state management events, and profile performance.
+
+TypeScript​
+Main article: Using Vue with TypeScript.
+
+Vue - Official extension provides type checking for SFCs using <script lang="ts"> blocks, including template expressions and cross-component props validation.
+
+Use vue-tsc for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+
+Testing
