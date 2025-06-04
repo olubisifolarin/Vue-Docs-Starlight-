@@ -75,11 +75,11 @@ Vue - Official replaces Vetur, our previous official VS Code extension for Vue 2
 ### Browser Devtools​
 The Vue browser devtools extension allows you to explore a Vue app's component tree, inspect the state of individual components, track state management events, and profile performance.
 
-TypeScript​
-Main article: Using Vue with TypeScript.
+### TypeScript​
+Main article: [Using Vue with TypeScript.]()
 
-Vue - Official extension provides type checking for SFCs using <script lang="ts"> blocks, including template expressions and cross-component props validation.
+[Vue - Official extension](https://github.com/vuejs/language-tools) provides type checking for SFCs using `<script lang="ts">` blocks, including template expressions and cross-component props validation.
 
-Use vue-tsc for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+Use `vue-tsc` for performing the same type checking from the command line, or for generating `d.ts` files for SFCs.
 
-Testing
+### Testing
