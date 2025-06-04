@@ -27,8 +27,6 @@ Creating fresh component instance on switch is normally useful behavior, but in 
 </KeepAlive>
 ```
 
-<?
-
 <br></br>
 
 <a href="https://play.vuejs.org/#eNqtU01v1DAQ/SuWL1u0ZYMEpyiN2FQ9AOJDhaMvaTKbunVsyx9hUZT/ztjOpruFUoG4xTPPz+/Nm4x0q/Vm8EBzWtjGcO2IBed1ySTvtTKOjMTe1kKo79ewIxPZGdWTFd5YLYhL1evt3Nhk8RQoTwHVCaCaAUw2SlpHGm8MSEcujh47i0wvmCyypAw14cFBr0XtAE+EFC0fSCNqay8YbaFXjMY6dkR9A6IsuNTeEfdDAyJM3XKEkOFlr1oQWJkfxlo+1MIHUHwWC1lJtkWWaP4HZ5U4q0ecHwD0VvAhGYqlBtFKhnnkPBhbCMsiW3qH+9kpQZHhSPCryI4GRc+Tq+eSNr9EvASkfIwHEWevnslEl5dznIvYPIwyPIVtq2tZRr6cjOPMPE3IGBoRcuOdU5K8bQRv7sMAAma9xgGsiyw1n7AYF+vvLCaDve1me6vVv/jDWI/9fQRr6w4It9FkYD+1mHboYWkQEXf3sSlnUd+Od5s7qyQaG8PtMJFecwHms3Yc9TOKz6SFYDT+QO9jzRkP54d6cwvN/W/qd3Yfaox+MWDBDMDo0nO16QA3L7Svvn6CPX4vTdTuBaL/0LwGq4QPGhOs8rJF2Ue4qPZdjIfL7pu92juQ9mAqCA3IKeIZxchCzE9Zf5D7evMm3mNyotNPPoanKQ==" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
