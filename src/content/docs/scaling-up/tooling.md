@@ -106,6 +106,26 @@ Users previously using Vue CLI may be used to having linters configured via webp
 4 (Optional) Setup tools like [lint-staged](https://github.com/lint-staged/lint-staged) to automatically lint modified files on git commit.
 
 ### Formatting​
-- The Vue - Official VS Code extension provides formatting for Vue SFCs out of the box.
 
-- Alternatively, Prettier provides built-in Vue SFC formatting support.
+- The [Vue - Official VS Code](https://github.com/vuejs/language-tools) extension provides formatting for Vue SFCs out of the box.
+
+- Alternatively, [Prettier](https://prettier.io/) provides built-in Vue SFC formatting support.
+
+### SFC Custom Block Integrations​
+Custom blocks are compiled into imports to the same Vue file with different request queries. It is up to the underlying build tool to handle these import requests.
+
+- If using Vite, a custom Vite plugin should be used to transform matched custom blocks into executable JavaScript. [Example](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#example-for-transforming-custom-blocks)
+
+- If using Vue CLI or plain webpack, a webpack loader should be configured to transform the matched blocks. [Example](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#example-for-transforming-custom-blocks)
+
+
+### Lower-Level Packages​
+`@vue/compiler-sfc​`
+- [Docs](https://github.com/vuejs/core/tree/main/packages/compiler-sfc)
+This package is part of the `Vue` core monorepo and is always published with the same version as the main `vue` package. It is included as a dependency of the main vue package and proxied under `vue/compiler-sfc` so you don't need to install it individually.
+
+The package itself provides lower-level utilities for processing Vue SFCs and is only meant for tooling authors that need to support Vue SFCs in custom tools.
+
+:::tip[TIP]
+Always prefer using this package via the `vue/compiler-sfc` deep import since this ensures its version is in sync with the Vue runtime.
+:::
