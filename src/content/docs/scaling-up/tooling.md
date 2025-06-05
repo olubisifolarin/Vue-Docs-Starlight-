@@ -83,3 +83,24 @@ Main article: [Using Vue with TypeScript.]()
 Use `vue-tsc` for performing the same type checking from the command line, or for generating `d.ts` files for SFCs.
 
 ### Testing
+
+Main article: [Testing Guide]().
+
+- [Cypress](https://www.cypress.io/) is recommended for E2E tests. It can also be used for component testing for Vue SFCs [via the Cypress Component Test Runner](https://docs.cypress.io/app/component-testing/get-started).
+
+- [Vitest](https://vitest.dev/) is a test runner created by Vue / Vite team members that focuses on speed. It is specifically designed for Vite-based applications to provide the same instant feedback loop for unit / component testing.
+
+- [Jest](https://jestjs.io/) can be made to work with Vite via [vite-jest](https://github.com/haoqunjiang/vite-jest). However, this is only recommended if you have existing Jest-based test suites that you need to migrate over to a Vite-based setup, as Vitest provides similar functionalities with a much more efficient integration.
+
+### Linting​
+The Vue team maintains eslint-plugin-vue, an ESLint plugin that supports SFC-specific linting rules.
+
+Users previously using Vue CLI may be used to having linters configured via webpack loaders. However when using a Vite-based build setup, our general recommendation is:
+
+npm install -D eslint eslint-plugin-vue, then follow eslint-plugin-vue's configuration guide.
+
+Setup ESLint IDE extensions, for example ESLint for VS Code, so you get linter feedback right in your editor during development. This also avoids unnecessary linting cost when starting the dev server.
+
+Run ESLint as part of the production build command, so you get full linter feedback before shipping to production.
+
+(Optional) Setup tools like lint-staged to automatically lint modified files on git commit.
