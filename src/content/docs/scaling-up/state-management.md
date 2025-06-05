@@ -130,3 +130,23 @@ export function useCount() {
   }
 }
 ```
+
+The fact that Vue's reactivity system is decoupled from the component model makes it extremely flexible.
+
+### SSR Considerations​
+If you are building an application that leverages Server-Side Rendering (SSR), the above pattern can lead to issues due to the store being a singleton shared across multiple requests. This is discussed in more details in the SSR guide.
+
+Pinia​
+While our hand-rolled state management solution will suffice in simple scenarios, there are many more things to consider in large-scale production applications:
+
+Stronger conventions for team collaboration
+Integrating with the Vue DevTools, including timeline, in-component inspection, and time-travel debugging
+Hot Module Replacement
+Server-Side Rendering support
+Pinia is a state management library that implements all of the above. It is maintained by the Vue core team, and works with both Vue 2 and Vue 3.
+
+Existing users may be familiar with Vuex, the previous official state management library for Vue. With Pinia serving the same role in the ecosystem, Vuex is now in maintenance mode. It still works, but will no longer receive new features. It is recommended to use Pinia for new applications.
+
+[Pinia](https://pinia.vuejs.org/) started out as an exploration of what the next iteration of Vuex could look like, incorporating many ideas from core team discussions for Vuex 5. Eventually, we realized that Pinia already implements most of what we wanted in Vuex 5, and decided to make it the new recommendation instead.
+
+Compared to Vuex, Pinia provides a simpler API with less ceremony, offers Composition-API-style APIs, and most importantly, has solid type inference support when used with TypeScript.
