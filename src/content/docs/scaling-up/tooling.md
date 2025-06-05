@@ -129,3 +129,12 @@ The package itself provides lower-level utilities for processing Vue SFCs and is
 :::tip[TIP]
 Always prefer using this package via the `vue/compiler-sfc` deep import since this ensures its version is in sync with the Vue runtime.
 :::
+
+
+`@vitejs/plugin-vue​`
+- [Docs](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue)
+Official plugin that provides Vue SFC support in Vite.
+
+`vue-loader​`
+- Docs
+The official loader that provides Vue SFC support in webpack. If you are using Vue CLI, also see [docs on modifying](https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-loader) `vue-loader` [options in Vue CLI](https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-loader).
