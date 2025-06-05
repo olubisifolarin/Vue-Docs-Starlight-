@@ -41,4 +41,92 @@ For case two, we often find ourselves resorting to solutions such as reaching fo
 A simpler and more straightforward solution is to extract the shared state out of the components, and manage it in a global singleton. With this, our component tree becomes a big "view", and any component can access the state or trigger actions, no matter where they are in the tree!
 
 ### Simple State Management with Reactivity API​
-If you have a piece of state that should be shared by multiple instances, you can use reactive() to create a reactive object, and then import it into multiple components:
+If you have a piece of state that should be shared by multiple instances, you can use `reactive()` to create a reactive object, and then import it into multiple components:
+
+```
+// store.js
+import { reactive } from 'vue'
+
+export const store = reactive({
+  count: 0
+})
+```
+
+```
+<!-- ComponentA.vue -->
+<script setup>
+import { store } from './store.js'
+</script>
+
+<template>From A: {{ store.count }}</template>
+```
+
+```
+<!-- ComponentB.vue -->
+<script setup>
+import { store } from './store.js'
+</script>
+
+<template>From B: {{ store.count }}</template>
+```
+
+Now whenever the `store` object is mutated, both `<ComponentA>` and `<ComponentB>` will update their views automatically - we have a single source of truth now.
+
+However, this also means any component importing `store` can mutate it however they want:
+
+```
+<template>
+  <button @click="store.count++">
+    From B: {{ store.count }}
+  </button>
+</template>
+```
+
+While this works in simple cases, global state that can be arbitrarily mutated by any component is not going to be very maintainable in the long run. To ensure the state-mutating logic is centralized like the state itself, it is recommended to define methods on the store with names that express the intention of the actions:
+
+```
+// store.js
+import { reactive } from 'vue'
+
+export const store = reactive({
+  count: 0,
+  increment() {
+    this.count++
+  }
+})
+```
+
+```
+<template>
+  <button @click="store.increment()">
+    From B: {{ store.count }}
+  </button>
+</template>
+```
+
+:::tip[TIP]
+Note the click handler uses `store.increment()` with parentheses - this is necessary to call the method with the proper `this` context since it's not a component method.
+:::
+
+<a href="https://play.vuejs.org/" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
+  ▶️ Try it in the Playground.
+</a>
+
+Although here we are using a single reactive object as a store, you can also share reactive state created using other Reactivity APIs such as `ref()` or `computed()`, or even return global state from a [Composable](Vue-Docs-Starlight-/reuseable/composables):
+
+```
+import { ref } from 'vue'
+
+// global state, created in module scope
+const globalCount = ref(1)
+
+export function useCount() {
+  // local state, created per-component
+  const localCount = ref(1)
+
+  return {
+    globalCount,
+    localCount
+  }
+}
+```

@@ -53,6 +53,6 @@ const currentView = computed(() => {
 </template>
 ```
 
-a href="https://play.vuejs.org/" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
+<a href="https://play.vuejs.org/" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
   ▶️ Try it in the Playground.
 </a>
