@@ -97,7 +97,7 @@ The Vue team maintains eslint-plugin-vue, an [ESLint](https://eslint.org/) plugi
 
 Users previously using Vue CLI may be used to having linters configured via webpack loaders. However when using a Vite-based build setup, our general recommendation is:
 
-1 `npm install -D eslint [eslint-plugin-vue]`(https://github.com/vuejs/eslint-plugin-vue), then follow `eslint-plugin-vue's` [configuration guide](https://eslint.vuejs.org/user-guide/#usage).
+1 `npm install -D eslint eslint-plugin-vue`, then follow `eslint-plugin-vue's` [configuration guide](https://eslint.vuejs.org/user-guide/#usage).
 
 2 Setup ESLint IDE extensions, for example [ESLint for VS Code](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), so you get linter feedback right in your editor during development. This also avoids unnecessary linting cost when starting the dev server.
 
@@ -120,7 +120,7 @@ Custom blocks are compiled into imports to the same Vue file with different requ
 
 
 ### Lower-Level Packages​
-`@vue/compiler-sfc​`
+##### `@vue/compiler-sfc​`
 - [Docs](https://github.com/vuejs/core/tree/main/packages/compiler-sfc)
 This package is part of the `Vue` core monorepo and is always published with the same version as the main `vue` package. It is included as a dependency of the main vue package and proxied under `vue/compiler-sfc` so you don't need to install it individually.
 
@@ -131,10 +131,10 @@ Always prefer using this package via the `vue/compiler-sfc` deep import since th
 :::
 
 
-`@vitejs/plugin-vue​`
+##### `@vitejs/plugin-vue​`
 - [Docs](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue)
 Official plugin that provides Vue SFC support in Vite.
 
-`vue-loader​`
+##### `vue-loader​`
 - Docs
 The official loader that provides Vue SFC support in webpack. If you are using Vue CLI, also see [docs on modifying](https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-loader) `vue-loader` [options in Vue CLI](https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-loader).
