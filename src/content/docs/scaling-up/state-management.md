@@ -108,9 +108,15 @@ export const store = reactive({
 Note the click handler uses `store.increment()` with parentheses - this is necessary to call the method with the proper `this` context since it's not a component method.
 :::
 
+</br>
+
 <a href="https://play.vuejs.org/" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bolder; color: blue;">
   ▶️ Try it in the Playground.
 </a>
+
+</br>
+
+#
 
 Although here we are using a single reactive object as a store, you can also share reactive state created using other Reactivity APIs such as `ref()` or `computed()`, or even return global state from a [Composable](Vue-Docs-Starlight-/reuseable/composables):
 
