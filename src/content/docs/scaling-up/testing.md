@@ -199,3 +199,63 @@ When end-to-end (E2E) tests are run in continuous integration/deployment pipelin
 [Nightwatch](https://nightwatchjs.org/) is an E2E testing solution based on [Selenium WebDriver](https://www.npmjs.com/package/selenium-webdriver). This gives it the widest browser support range, including native mobile testing. Selenium-based solutions will be slower than Playwright or Cypress.
 
 [WebdriverIO](https://webdriver.io/) is a test automation framework for web and mobile testing based on the WebDriver protocol.
+
+### Recipes​
+
+#### Adding Vitest to a Project​
+In a Vite-based Vue project, run:
+
+```
+npm install -D vitest happy-dom @testing-library/vue
+```
+
+Next, update the Vite configuration to add the test option block:
+
+```
+// vite.config.js
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  // ...
+  test: {
+    // enable jest-like global test APIs
+    globals: true,
+    // simulate DOM with happy-dom
+    // (requires installing happy-dom as a peer dependency)
+    environment: 'happy-dom'
+  }
+})
+```
+
+:::tip[TIP]
+If you use TypeScript, add `vitest/globals` to the types field in your `tsconfig.json`
+
+```
+// tsconfig.json
+
+{
+  "compilerOptions": {
+    "types": ["vitest/globals"]
+  }
+}
+```
+:::
+
+Then, create a file ending in `*.test.js` in your project. You can place all test files in a test directory in the project root or in test directories next to your source files. Vitest will automatically search for them using the naming convention.
+
+```
+// MyComponent.test.js
+import { render } from '@testing-library/vue'
+import MyComponent from './MyComponent.vue'
+
+test('it should work', () => {
+  const { getByText } = render(MyComponent, {
+    props: {
+      /* ... */
+    }
+  })
+
+  // assert output
+  getByText('...')
+})
+```
