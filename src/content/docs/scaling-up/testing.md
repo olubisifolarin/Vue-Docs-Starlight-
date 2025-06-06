@@ -104,3 +104,32 @@ Component tests should not mock child components, but instead test the interacti
 
 Component tests should focus on the component's public interfaces rather than internal implementation details. For most components, the public interface is limited to: events emitted, props, and slots. When testing, remember to **test what a component does**, not how it does it.
 
+**DO**
+
+- For **Visual** logic: assert correct render output based on inputted props and slots.
+
+- For **Behavioral** logic: assert correct render updates or emitted events in response to user input events.
+
+In the below example, we demonstrate a Stepper component that has a DOM element labeled "increment" and can be clicked. We pass a prop called `max` that prevents the Stepper from being incremented past `2`, so if we click the button 3 times, the UI should still say `2`.
+
+We know nothing about the implementation of Stepper, only that the "input" is the `max` prop and the "output" is the state of the DOM as the user will see it.
+
+```
+const valueSelector = '[data-testid=stepper-value]'
+const buttonSelector = '[data-testid=increment]'
+
+mount(Stepper, {
+  props: {
+    max: 1
+  }
+})
+
+cy.get(valueSelector)
+  .should('be.visible')
+  .and('contain.text', '0')
+  .get(buttonSelector)
+  .click()
+  .get(valueSelector)
+  .should('contain.text', '1')
+```
+
