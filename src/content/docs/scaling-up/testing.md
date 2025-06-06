@@ -259,3 +259,30 @@ test('it should work', () => {
   getByText('...')
 })
 ```
+
+Finally, update `package.json` to add the test script and run it:
+
+```
+{
+  // ...
+  "scripts": {
+    "test": "vitest"
+  }
+}
+```
+
+```
+> npm test
+```
+
+#### Testing Composables​
+This section assumes you have read the Composables section.
+
+When it comes to testing composables, we can divide them into two categories: composables that do not rely on a host component instance, and composables that do.
+
+A composable depends on a host component instance when it uses the following APIs:
+
+- Lifecycle hooks
+- Provide / Inject
+
+If a composable only uses Reactivity APIs, then it can be tested by directly invoking it and asserting its returned state/methods:
