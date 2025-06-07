@@ -38,6 +38,10 @@ export default defineConfig({
 				  label: 'Scaling Up',
 				  autogenerate: { directory: 'scaling-up' },
 				},
+				{
+				  label: 'Best Practices',
+				  autogenerate: { directory: 'best-practices' },
+				},
 			  ],
 				
 		}),
