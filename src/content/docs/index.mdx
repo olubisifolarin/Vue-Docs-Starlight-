@@ -4,21 +4,39 @@ description: Get started building your docs site with Starlight.
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
+import { LinkCard } from '@astrojs/starlight/components';
+
+
 
 <CardGrid stagger>
 	<Card title="Introduction" icon="pencil">
-		Understand what Vue.js is and why it’s a powerful choice for building user interfaces.
+	<p>
+	Understand what Vue.js is and why it’s a powerful choice for building user interfaces.
+	</p>
+	<a href="/Vue-Docs-Starlight-/getting-started/introduction/" class="text-green-600 font-semibold mt-2 inline-flex items-center">
+	Read more <span aria-hidden="true" class="ml-1">→</span>
+	</a>
 	</Card>
-	<Card title="Getting Started" icon="rocket">
-		Learn how to set up a Vue.js project and write your first component.
+
+	<Card title="Quick Start" icon="rocket">
+	<p>Learn how to set up a Vue.js project and write your first component.</p>
+	<a href="/Vue-Docs-Starlight-/getting-started/quick-start/" class="text-green-600 font-semibold mt-2 inline-flex items-center">
+	Read more <span aria-hidden="true" class="ml-1">→</span>
+	</a>
 	</Card>
-	<Card title="Installation" icon="download">
-		Follow step-by-step instructions to install Vue using npm, CDN, or CLI tools.
+
+	<Card title="Essentials" icon="download">
+		<p>Dive into core concepts like reactivity, templates, directives, and computed properties.</p>
+		<a href="/Vue-Docs-Starlight-/getting-started/quick-start/" class="text-green-600 font-semibold mt-2 inline-flex items-center">
+		Read more <span aria-hidden="true" class="ml-1">→</span>
+		</a>
 	</Card>
-	<Card title="Essentials" icon="add-document">
+
+	<Card title="Built-in Components" icon="add-document">
 		Dive into core concepts like reactivity, templates, directives, and computed properties.
 	</Card>
-	<Card title="API Reference" icon="open-book">
+
+	<Card title="Best Practices" icon="open-book">
 		Find detailed information about Vue's built-in functions, options, and components.
 	</Card>
 </CardGrid>

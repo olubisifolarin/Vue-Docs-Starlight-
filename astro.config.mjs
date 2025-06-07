@@ -9,7 +9,8 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Vue.js',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }], 
+			favicon: '/vue.jpg',
+			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/olubisifolarin' }], 
 			sidebar: [
 				{
 				  label: 'Getting Started',
