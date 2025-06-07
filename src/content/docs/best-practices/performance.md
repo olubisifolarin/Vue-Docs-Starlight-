@@ -23,10 +23,19 @@ To improve performance, we need to first know how to measure it. There are a num
 
 For profiling load performance of production deployments:
 
-- PageSpeed Insights
-- WebPageTest
+- [PageSpeed Insights](https://pagespeed.web.dev/)
+- [WebPageTest](https://www.webpagetest.org/)
 For profiling performance during local development:
 
-- Chrome DevTools Performance Panel
+- [Chrome DevTools Performance Panel](https://developer.chrome.com/docs/devtools/performance)
     - `app.config.performance` enables Vue-specific performance markers in Chrome DevTools' performance timeline.
-- Vue DevTools Extension also provides a performance profiling feature.
+- [Vue DevTools Extension]() also provides a performance profiling feature.
+
+### Page Load Optimizations​
+There are many framework-agnostic aspects for optimizing page load performance - [check out this web.dev guide](https://web.dev/explore/fast) for a comprehensive round up. Here, we will primarily focus on techniques that are specific to Vue.
+
+Choosing the Right Architecture​
+If your use case is sensitive to page load performance, avoid shipping it as a pure client-side SPA. You want your server to be directly sending HTML containing the content the users want to see. Pure client-side rendering suffers from slow time-to-content. This can be mitigated with [Server-Side Rendering (SSR)]() or [Static Site Generation (SSG)](). Check out the SSR Guide to learn about performing SSR with Vue. If your app doesn't have rich interactivity requirements, you can also use a traditional backend server to render the HTML and enhance it with Vue on the client.
+
+If your main application has to be an SPA, but has marketing pages (landing, about, blog), ship them separately! Your marketing pages should ideally be deployed as static HTML with minimal JS, by using SSG.
+
