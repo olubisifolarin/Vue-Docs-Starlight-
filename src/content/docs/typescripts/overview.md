@@ -1,6 +1,6 @@
 ---
-title: Using Vue with TypeScript
-description: 
+title: Overview
+description: Using Vue with TypeScript
 ---
 
 A type system like TypeScript can detect many common errors via static analysis at build time. This reduces the chance of runtime errors in production, and also allows us to more confidently refactor code in large-scale applications. TypeScript also improves developer ergonomics via type-based auto-completion in IDEs.
@@ -29,3 +29,33 @@ Vue - Official extension replaces [Vetur](https://marketplace.visualstudio.com/i
 :::
 
 [WebStorm](https://www.jetbrains.com/webstorm/) also provides out-of-the-box support for both TypeScript and Vue. Other JetBrains IDEs support them too, either out of the box or [via a free plugin](https://plugins.jetbrains.com/plugin/9442-vue-js). As of version 2023.2, WebStorm and the Vue Plugin come with built-in support for the Vue Language Server. You can set the Vue service to use Volar integration on all TypeScript versions, under Settings > Languages & Frameworks > TypeScript > Vue. By default, Volar will be used for TypeScript versions 5.0 and higher.
+
+#### Configuring `tsconfig.json​`
+Projects scaffolded via `create-vue` include pre-configured `tsconfig.json`. The base config is abstracted in the @vue/`tsconfig` package. Inside the project, we use [Project References](https://www.typescriptlang.org/docs/handbook/project-references.html) to ensure correct types for code running in different environments (e.g. app code and test code should have different global variables).
+
+When configuring `tsconfig.json` manually, some notable options include:
+
+- `compilerOptions.isolatedModules` is set to true because Vite uses esbuild for transpiling TypeScript and is subject to single-file transpile limitations. `compilerOptions.verbatimModuleSyntax` is a [superset of](https://github.com/microsoft/TypeScript/issues/53601) `isolatedModules` and is a good choice, too - it's what `@vue/tsconfig` uses.
+
+- If you're using Options API, you need to set `compilerOptions.strict` to `true` (or at least enable `compilerOptions`.`noImplicitThis`, which is a part of the `strict` flag) to leverage type checking of `this` in component options. Otherwise `this` will be treated as `any`.
+
+- If you have configured resolver aliases in your build tool, for example the `@/*` alias configured by default in a `create-vue` project, you need to also configure it for TypeScript via `compilerOptions.paths`.
+
+- If you intend to use TSX with Vue, set `compilerOptions.jsx` to `"preserve"`, and set `compilerOptions.jsxImportSource` to `"vue"`.
+
+See also:
+
+[Official TypeScript compiler options docs](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+</br>
+[esbuild TypeScript compilation caveats](https://esbuild.github.io/content-types/#typescript-caveats)
+
+#### Note on Vue CLI and ts-loader​
+In webpack-based setups such as Vue CLI, it is common to perform type checking as part of the module transform pipeline, for example with `ts-loader`. This, however, isn't a clean solution because the type system needs knowledge of the entire module graph to perform type checks. Individual module's transform step simply is not the right place for the task. It leads to the following problems:
+
+- `ts-loader` can only type check post-transform code. This doesn't align with the errors we see in IDEs or from `vue-tsc`, which map directly back to the source code.
+
+- Type checking can be slow. When it is performed in the same thread / process with code transformations, it significantly affects the build speed of the entire application.
+
+- We already have type checking running right in our IDE in a separate process, so the cost of dev experience slow down simply isn't a good trade-off.
+
+If you are currently using Vue 3 + TypeScript via Vue CLI, we strongly recommend migrating over to Vite. We are also working on CLI options to enable transpile-only TS support, so that you can switch to `vue-tsc` for type checking.
