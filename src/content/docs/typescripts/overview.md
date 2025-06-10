@@ -59,3 +59,131 @@ In webpack-based setups such as Vue CLI, it is common to perform type checking a
 - We already have type checking running right in our IDE in a separate process, so the cost of dev experience slow down simply isn't a good trade-off.
 
 If you are currently using Vue 3 + TypeScript via Vue CLI, we strongly recommend migrating over to Vite. We are also working on CLI options to enable transpile-only TS support, so that you can switch to `vue-tsc` for type checking.
+
+### General Usage Notes​
+`defineComponent()`​
+To let TypeScript properly infer types inside component options, we need to define components with `defineComponent()`:
+
+```
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  // type inference enabled
+  props: {
+    name: String,
+    msg: { type: String, required: true }
+  },
+  data() {
+    return {
+      count: 1
+    }
+  },
+  mounted() {
+    this.name // type: string | undefined
+    this.msg // type: string
+    this.count // type: number
+  }
+})
+```
+
+`defineComponent()` also supports inferring the props passed to `setup()` when using Composition API without `<script setup>`:
+
+```
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  // type inference enabled
+  props: {
+    message: String
+  },
+  setup(props) {
+    props.message // type: string | undefined
+  }
+})
+```
+
+:::tip[TIP]
+`defineComponent()` also enables type inference for components defined in plain JavaScript.
+:::
+
+#### Usage in Single-File Components​
+To use TypeScript in SFCs, add the `lang="ts"` attribute to `<script>` tags. When `lang="ts"` is present, all template expressions also enjoy stricter type checking.
+
+```
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  data() {
+    return {
+      count: 1
+    }
+  }
+})
+</script>
+
+<template>
+  <!-- type checking and auto-completion enabled -->
+  {{ count.toFixed(2) }}
+</template>
+```
+`lang="ts"` can also be used with `<script setup>`:
+
+```
+<script setup lang="ts">
+// TypeScript enabled
+import { ref } from 'vue'
+
+const count = ref(1)
+</script>
+
+<template>
+  <!-- type checking and auto-completion enabled -->
+  {{ count.toFixed(2) }}
+</template>
+```
+
+#### TypeScript in Templates​
+The `<template>` also supports TypeScript in binding expressions when `<script lang="ts">` or `<script setup lang="ts">` is used. This is useful in cases where you need to perform type casting in template expressions.
+
+Here's a contrived example:
+
+```
+<script setup lang="ts">
+let x: string | number = 1
+</script>
+
+<template>
+  <!-- error because x could be a string -->
+  {{ x.toFixed(2) }}
+</template>
+```
+
+This can be worked around with an inline type cast:
+
+```
+<script setup lang="ts">
+let x: string | number = 1
+</script>
+
+<template>
+  {{ (x as number).toFixed(2) }}
+</template>
+```
+
+:::tip[TIP]
+If using Vue CLI or a webpack-based setup, TypeScript in template expressions requires `vue-loader@^16.8.0`.
+:::
+
+#### Usage with TSX​
+Vue also supports authoring components with JSX / TSX. Details are covered in the [Render Function & JSX guide]().
+
+### Generic Components​
+Generic components are supported in two cases:
+
+- In SFCs: `<script setup>` with the `generic` attribute
+- Render function / JSX components: `defineComponent()'s` function signature
+
+### API-Specific Recipes​
+- [TS with Composition API](/Vue-Docs-Starlight-/typescripts/ts-comp-api)
+- [TS with Options API](/Vue-Docs-Starlight-/typescripts/ts-option-api)
