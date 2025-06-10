@@ -126,7 +126,9 @@ export default defineComponent({
   <!-- type checking and auto-completion enabled -->
   {{ count.toFixed(2) }}
 </template>
+
 ```
+
 `lang="ts"` can also be used with `<script setup>`:
 
 ```
