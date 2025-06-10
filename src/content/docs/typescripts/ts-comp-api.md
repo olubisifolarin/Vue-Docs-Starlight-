@@ -98,3 +98,46 @@ This will be compiled to equivalent runtime props `default` options. In addition
 :::info[INFO]
 Note that default values for mutable reference types (like arrays or objects) should be wrapped in functions when using `withDefaults` to avoid accidental modification and external side effects. This ensures each component instance gets its own copy of the default value. This is not necessary when using default values with destructure.
 :::
+
+#### Without `<script setup>​`
+If not using `<script setup>`, it is necessary to use `defineComponent()` to enable props type inference. The type of the props object passed to `setup()` is inferred from the `props` option.
+
+```
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  props: {
+    message: String
+  },
+  setup(props) {
+    props.message // <-- type: string
+  }
+})
+```
+
+#### Complex prop types​
+With type-based declaration, a prop can use a complex type much like any other type:
+
+```
+<script setup lang="ts">
+interface Book {
+  title: string
+  author: string
+  year: number
+}
+
+const props = defineProps<{
+  book: Book
+}>()
+</script>
+```
+
+For runtime declaration, we can use the `PropType` utility type:
+
+```
+import type { PropType } from 'vue'
+
+const props = defineProps({
+  book: Object as PropType<Book>
+})
+```
