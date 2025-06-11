@@ -193,8 +193,58 @@ const emit = defineEmits<{
 
 The type argument can be one of the following:
 
-A callable function type, but written as a type literal with Call Signatures. It will be used as the type of the returned emit function.
-A type literal where the keys are the event names, and values are array / tuple types representing the additional accepted parameters for the event. The example above is using named tuples so each argument can have an explicit name.
+1. A callable function type, but written as a type literal with [Call Signatures](https://www.typescriptlang.org/docs/handbook/2/functions.html#call-signatures). It will be used as the type of the returned `emit` function.
+2. A type literal where the keys are the event names, and values are array / tuple types representing the additional accepted parameters for the event. The example above is using named tuples so each argument can have an explicit name.
 As we can see, the type declaration gives us much finer-grained control over the type constraints of emitted events.
 
-When not using <script setup>, defineComponent() is able to infer the allowed events for the emit function exposed on the setup context:
+When not using `<script setup>`, `defineComponent()` is able to infer the allowed events for the `emit` function exposed on the setup context:
+
+```
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  emits: ['change'],
+  setup(props, { emit }) {
+    emit('change') // <-- type check / auto-completion
+  }
+})
+```
+
+### Typing ref()​
+Refs infer the type from the initial value:
+
+```
+import { ref } from 'vue'
+
+// inferred type: Ref<number>
+const year = ref(2020)
+
+// => TS Error: Type 'string' is not assignable to type 'number'.
+year.value = '2020'
+```
+Sometimes we may need to specify complex types for a ref's inner value. We can do that by using the `Ref` type:
+
+```
+import { ref } from 'vue'
+import type { Ref } from 'vue'
+
+const year: Ref<string | number> = ref('2020')
+
+year.value = 2020 // ok!
+```
+
+Or, by passing a generic argument when calling `ref()` to override the default inference:
+
+```
+// resulting type: Ref<string | number>
+const year = ref<string | number>('2020')
+
+year.value = 2020 // ok!
+```
+
+If you specify a generic type argument but omit the initial value, the resulting type will be a union type that includes `undefined`:
+
+```
+// inferred type: Ref<number | undefined>
+const n = ref<number>()
+```
