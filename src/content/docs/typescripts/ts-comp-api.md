@@ -248,3 +248,77 @@ If you specify a generic type argument but omit the initial value, the resulting
 // inferred type: Ref<number | undefined>
 const n = ref<number>()
 ```
+
+### Typing reactive()​
+`reactive()` also implicitly infers the type from its argument:
+
+```
+import { reactive } from 'vue'
+
+// inferred type: { title: string }
+const book = reactive({ title: 'Vue 3 Guide' })
+```
+
+To explicitly type a ``reactive` property, we can use interfaces:
+
+```
+import { reactive } from 'vue'
+
+interface Book {
+  title: string
+  year?: number
+}
+
+const book: Book = reactive({ title: 'Vue 3 Guide' })
+```
+
+:::tip[TIP]
+It's not recommended to use the generic argument of `reactive()` because the returned type, which handles nested ref unwrapping, is different from the generic argument type
+:::
+
+### Typing `computed()​`
+`computed()` infers its type based on the getter's return value:
+
+```
+import { ref, computed } from 'vue'
+
+const count = ref(0)
+
+// inferred type: ComputedRef<number>
+const double = computed(() => count.value * 2)
+
+// => TS Error: Property 'split' does not exist on type 'number'
+const result = double.value.split('')
+```
+
+You can also specify an explicit type via a generic argument:
+
+```
+const double = computed<number>(() => {
+  // type error if this doesn't return a number
+})
+```
+
+### Typing Event Handlers​
+When dealing with native DOM events, it might be useful to type the argument we pass to the handler correctly. Let's take a look at this example:
+
+```
+<script setup lang="ts">
+function handleChange(event) {
+  // `event` implicitly has `any` type
+  console.log(event.target.value)
+}
+</script>
+
+<template>
+  <input type="text" @change="handleChange" />
+</template>
+```
+
+Without type annotation, the `event` argument will implicitly have a type of `any`. This will also result in a TS error if `"strict": true` or `"noImplicitAny": true` are used in `tsconfig.json`. It is therefore recommended to explicitly annotate the argument of event handlers. In addition, you may need to use type assertions when accessing the properties of `event`:
+
+```
+function handleChange(event: Event) {
+  console.log((event.target as HTMLInputElement).value)
+}
+```
