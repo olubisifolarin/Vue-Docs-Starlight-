@@ -322,3 +322,59 @@ function handleChange(event: Event) {
   console.log((event.target as HTMLInputElement).value)
 }
 ```
+
+### Typing Provide / Inject​
+Provide and inject are usually performed in separate components. To properly type injected values, Vue provides an `InjectionKey` interface, which is a generic type that extends `Symbol`. It can be used to sync the type of the injected value between the provider and the consumer:
+
+```
+import { provide, inject } from 'vue'
+import type { InjectionKey } from 'vue'
+
+const key = Symbol() as InjectionKey<string>
+
+provide(key, 'foo') // providing non-string value will result in error
+
+const foo = inject(key) // type of foo: string | undefined
+```
+
+It's recommended to place the injection key in a separate file so that it can be imported in multiple components.
+
+When using string injection keys, the type of the injected value will be `unknown`, and needs to be explicitly declared via a generic type argument:
+
+```
+const foo = inject<string>('foo') // type: string | undefined
+```
+
+Notice the injected value can still be `undefined`, because there is no guarantee that a provider will provide this value at runtime.
+
+The `undefined` type can be removed by providing a default value:
+
+```
+const foo = inject<string>('foo', 'bar') // type: string
+```
+
+If you are sure that the value is always provided, you can also force cast the value:
+
+```
+const foo = inject('foo') as string
+```
+
+### Typing Template Refs​
+With Vue 3.5 and `@vue/language-tools 2.1` (powering both the IDE language service and `vue-tsc`), the type of refs created by `useTemplateRef()` in SFCs can be automatically inferred for static `refs` based on what element the matching ref attribute is used on.
+
+In cases where auto-inference is not possible, you can still cast the template ref to an explicit type via the generic argument:
+
+```
+const el = useTemplateRef<HTMLInputElement>('el')
+```
+
+To get the right DOM interface you can check pages like [MDN]().
+
+Note that for strict type safety, it is necessary to use optional chaining or type guards when accessing `el.value`. This is because the initial ref value is `null` until the component is mounted, and it can also be set to `null` if the referenced element is unmounted by `v-if`.
+
+Typing Component Template Refs​
+With Vue 3.5 and @vue/language-tools 2.1 (powering both the IDE language service and vue-tsc), the type of refs created by useTemplateRef() in SFCs can be automatically inferred for static refs based on what element or component the matching ref attribute is used on.
+
+In cases where auto-inference is not possible (e.g. non-SFC usage or dynamic components), you can still cast the template ref to an explicit type via the generic argument.
+
+In order to get the instance type of an imported component, we need to first get its type via typeof, then use TypeScript's built-in InstanceType utility to extract its instance type:
