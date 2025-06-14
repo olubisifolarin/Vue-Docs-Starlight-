@@ -175,3 +175,55 @@ export default defineComponent({
   }
 })
 ```
+
+### Augmenting Global Properties​
+Some plugins install globally available properties to all component instances via `app.config.globalProperties`. For example, we may install `this.$http` for data-fetching or `this.$translate` for internationalization. To make this play well with TypeScript, Vue exposes a `ComponentCustomProperties` interface designed to be augmented via [TypeScript module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation):
+
+```
+import axios from 'axios'
+
+declare module 'vue' {
+  interface ComponentCustomProperties {
+    $http: typeof axios
+    $translate: (key: string) => string
+  }
+}
+```
+
+#### Type Augmentation Placement​
+We can put this type augmentation in a `.ts` file, or in a project-wide `*.d.ts` file. Either way, make sure it is included in `tsconfig.json`. For library / plugin authors, this file should be specified in the `types` property in `package.json`.
+
+In order to take advantage of module augmentation, you will need to ensure the augmentation is placed in a [TypeScript module](https://www.typescriptlang.org/docs/handbook/modules/introduction.html). That is to say, the file needs to contain at least one top-level `import` or `export`, even if it is just `export {}`. If the augmentation is placed outside of a module, it will overwrite the original types rather than augmenting them!
+
+```
+// Does not work, overwrites the original types.
+declare module 'vue' {
+  interface ComponentCustomProperties {
+    $translate: (key: string) => string
+  }
+}
+```
+
+```
+// Works correctly
+export {}
+
+declare module 'vue' {
+  interface ComponentCustomProperties {
+    $translate: (key: string) => string
+  }
+}
+```
+
+### Augmenting Custom Options​
+Some plugins, for example `vue-router`, provide support for custom component options such as `beforeRouteEnter`:
+
+```
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  beforeRouteEnter(to, from, next) {
+    // ...
+  }
+})
+```
