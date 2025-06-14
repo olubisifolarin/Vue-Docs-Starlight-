@@ -47,6 +47,10 @@ export default defineConfig({
 				  label: 'TypeScript',
 				  autogenerate: { directory: 'typescripts' },
 				},
+				{
+				  label: 'Extra Topics',
+				  autogenerate: { directory: 'extra-topics' },
+				},
 			  ],
 				
 		}),
