@@ -107,3 +107,71 @@ export default defineComponent({
   }
 })
 ```
+
+In some cases, you may want to explicitly annotate the type of a computed property to ensure its implementation is correct:
+
+```
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  data() {
+    return {
+      message: 'Hello!'
+    }
+  },
+  computed: {
+    // explicitly annotate return type
+    greeting(): string {
+      return this.message + '!'
+    },
+
+    // annotating a writable computed property
+    greetingUppercased: {
+      get(): string {
+        return this.greeting.toUpperCase()
+      },
+      set(newValue: string) {
+        this.message = newValue.toUpperCase()
+      }
+    }
+  }
+})
+```
+
+Explicit annotations may also be required in some edge cases where TypeScript fails to infer the type of a computed property due to circular inference loops.
+
+### Typing Event Handlers​
+When dealing with native DOM events, it might be useful to type the argument we pass to the handler correctly. Let's take a look at this example:
+
+```
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  methods: {
+    handleChange(event) {
+      // `event` implicitly has `any` type
+      console.log(event.target.value)
+    }
+  }
+})
+</script>
+
+<template>
+  <input type="text" @change="handleChange" />
+</template>
+```
+
+Without type annotation, the `event` argument will implicitly have a type of `any`. This will also result in a TS error if `"strict": true` or `"noImplicitAny": true` are used in `tsconfig.json`. It is therefore recommended to explicitly annotate the argument of event handlers. In addition, you may need to use type assertions when accessing the properties of `event`:
+
+```
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  methods: {
+    handleChange(event: Event) {
+      console.log((event.target as HTMLInputElement).value)
+    }
+  }
+})
+```
