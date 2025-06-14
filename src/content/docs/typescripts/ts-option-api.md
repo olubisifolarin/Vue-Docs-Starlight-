@@ -57,3 +57,53 @@ export default defineComponent({
   }
 })
 ```
+
+This prevents TypeScript from having to infer the type of `this` inside these functions, which, unfortunately, can cause the type inference to fail.
+
+### Typing Component Emits​
+We can declare the expected payload type for an emitted event using the object syntax of the `emits` option. Also, all non-declared emitted events will throw a type error when called:
+
+```
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  emits: {
+    addBook(payload: { bookName: string }) {
+      // perform runtime validation
+      return payload.bookName.length > 0
+    }
+  },
+  methods: {
+    onSubmit() {
+      this.$emit('addBook', {
+        bookName: 123 // Type error!
+      })
+
+      this.$emit('non-declared-event') // Type error!
+    }
+  }
+})
+```
+
+### Typing Computed Properties​
+A computed property infers its type based on its return value:
+
+```
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  data() {
+    return {
+      message: 'Hello!'
+    }
+  },
+  computed: {
+    greeting() {
+      return this.message + '!'
+    }
+  },
+  mounted() {
+    this.greeting // type: string
+  }
+})
+```
