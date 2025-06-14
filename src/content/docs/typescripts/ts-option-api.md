@@ -227,3 +227,19 @@ export default defineComponent({
   }
 })
 ```
+
+Without proper type augmentation, the arguments of this hook will implicitly have `any` type. We can augment the `ComponentCustomOptions` interface to support these custom options:
+
+```
+import { Route } from 'vue-router'
+
+declare module 'vue' {
+  interface ComponentCustomOptions {
+    beforeRouteEnter?(to: Route, from: Route, next: () => void): void
+  }
+}
+```
+
+Now the `beforeRouteEnter` option will be properly typed. Note this is just an example - well-typed libraries like `vue-router` should automatically perform these augmentations in their own type definitions.
+
+The placement of this augmentation is subject to the [same restrictions](/Vue-Docs-Starlight-/typescripts/ts-option-api/type-augmentation-placement) as global property augmentations.
