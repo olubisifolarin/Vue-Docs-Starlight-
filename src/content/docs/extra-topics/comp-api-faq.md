@@ -58,3 +58,24 @@ The primary advantage of Composition API is that it enables clean, efficient log
 
 Composition API's logic reuse capability has given rise to impressive community projects such as [VueUse](https://vueuse.org/), an ever-growing collection of composable utilities. It also serves as a clean mechanism for easily integrating stateful third-party services or libraries into Vue's reactivity system, for example immutable data, state machines, and RxJS.
 
+#### More Flexible Code Organization​
+Many users love that we write organized code by default with Options API: everything has its place based on the option it falls under. However, Options API poses serious limitations when a single component's logic grows beyond a certain complexity threshold. This limitation is particularly prominent in components that need to deal with multiple **logical concerns**, which we have witnessed first hand in many production Vue 2 apps.
+
+Take the folder explorer component from Vue CLI's GUI as an example: this component is responsible for the following logical concerns:
+
+- Tracking current folder state and displaying its content
+- Handling folder navigation (opening, closing, refreshing...)
+- Handling new folder creation
+- Toggling show favorite folders only
+- Toggling show hidden folders
+- Handling current working directory changes
+
+Better Type Inference​
+In recent years, more and more frontend developers are adopting TypeScript as it helps us write more robust code, make changes with more confidence, and provides a great development experience with IDE support. However, the Options API, originally conceived in 2013, was designed without type inference in mind. We had to implement some absurdly complex type gymnastics to make type inference work with the Options API. Even with all this effort, type inference for Options API can still break down for mixins and dependency injection.
+
+This had led many developers who wanted to use Vue with TS to lean towards Class API powered by vue-class-component. However, a class-based API heavily relies on ES decorators, a language feature that was only a stage 2 proposal when Vue 3 was being developed in 2019. We felt it was too risky to base an official API on an unstable proposal. Since then, the decorators proposal has gone through yet another complete overhaul, and finally reached stage 3 in 2022. In addition, class-based API suffers from logic reuse and organization limitations similar to Options API.
+
+In comparison, Composition API utilizes mostly plain variables and functions, which are naturally type friendly. Code written in Composition API can enjoy full type inference with little need for manual type hints. Most of the time, Composition API code will look largely identical in TypeScript and plain JavaScript. This also makes it possible for plain JavaScript users to benefit from partial type inference.
+
+Smaller Production Bundle and Less Overhead​
+Code written in Composition API and <script setup> is also more efficient and minification-friendly than Options API equivalent. This is because the template in a <script setup> component is compiled as a function inlined in the same scope of the <script setup> code. Unlike property access from this, the compiled template code can directly access variables declared inside <script setup>, without an instance proxy in between. This also leads to better minification because all the variable names can be safely shortened.
