@@ -87,3 +87,20 @@ Some users moving from Options API found their Composition API code less organiz
 It is true that Composition API no longer provides the "guard rails" that guide you to put your code into respective buckets. In return, you get to author component code like how you would write normal JavaScript. This means **you can and should apply any code organization best practices to your Composition API code as you would when writing normal JavaScript**. If you can write well-organized JavaScript, you should also be able to write well-organized Composition API code.
 
 Options API does allow you to "think less" when writing component code, which is why many users love it. However, in reducing the mental overhead, it also locks you into the prescribed code organization pattern with no escape hatch, which can make it difficult to refactor or improve code quality in larger scale projects. In this regard, Composition API provides better long term scalability.
+
+#### Does Composition API cover all use cases?​
+Yes in terms of stateful logic. When using Composition API, there are only a few options that may still be needed: `props`, `emits`, name, and `inheritAttrs`.
+
+:::tip[TIP]
+Since 3.3 you can directly use `defineOptions` in `<script setup>` to set the component name or `inheritAttrs` property
+:::
+
+If you intend to exclusively use Composition API (along with the options listed above), you can shave a few kbs off your production bundle via a compile-time flag that drops Options API related code from Vue. Note this also affects Vue components in your dependencies.
+
+#### Can I use both APIs in the same component?​
+Yes. You can use Composition API via the `setup()` option in an Options API component.
+
+However, we only recommend doing so if you have an existing Options API codebase that needs to integrate with new features / external libraries written with Composition API.
+
+#### Will Options API be deprecated?​
+No, we do not have any plan to do so. Options API is an integral part of Vue and the reason many developers love it. We also realize that many of the benefits of Composition API only manifest in larger-scale projects, and Options API remains a solid choice for many low-to-medium-complexity scenarios.
