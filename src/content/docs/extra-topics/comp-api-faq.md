@@ -104,3 +104,36 @@ However, we only recommend doing so if you have an existing Options API codebase
 
 #### Will Options API be deprecated?​
 No, we do not have any plan to do so. Options API is an integral part of Vue and the reason many developers love it. We also realize that many of the benefits of Composition API only manifest in larger-scale projects, and Options API remains a solid choice for many low-to-medium-complexity scenarios.
+
+Can I use both APIs in the same component?​
+Yes. You can use Composition API via the setup() option in an Options API component.
+
+However, we only recommend doing so if you have an existing Options API codebase that needs to integrate with new features / external libraries written with Composition API.
+
+### Will Options API be deprecated?​
+No, we do not have any plan to do so. Options API is an integral part of Vue and the reason many developers love it. We also realize that many of the benefits of Composition API only manifest in larger-scale projects, and Options API remains a solid choice for many low-to-medium-complexity scenarios.
+
+### Comparison with React Hooks​
+Composition API provides the same level of logic composition capabilities as React Hooks, but with some important differences.
+
+React Hooks are invoked repeatedly every time a component updates. This creates a number of caveats that can confuse even seasoned React developers. It also leads to performance optimization issues that can severely affect development experience. Here are some examples:
+
+- Hooks are call-order sensitive and cannot be conditional.
+
+- Variables declared in a React component can be captured by a hook closure and become "stale" if the developer fails to pass in the correct dependencies array. This leads to React developers relying on ESLint rules to ensure correct dependencies are passed. However, the rule is often not smart enough and over-compensates for correctness, which leads to unnecessary invalidation and headaches when edge cases are encountered.
+
+- Expensive computations require the use of `useMemo`, which again requires manually passing in the correct dependencies array.
+
+- Event handlers passed to child components cause unnecessary child updates by default, and require explicit useCallback as an optimization. This is almost always needed, and again requires a correct dependencies array. Neglecting this leads to over-rendering apps by default and can cause performance issues without realizing it.
+
+- The stale closure problem, combined with Concurrent features, makes it difficult to reason about when a piece of hooks code is run, and makes working with mutable state that should persist across renders (via `useRef`) cumbersome.
+
+In comparison, Vue Composition API:
+
+- Invokes `setup()` or `<script setup>` code only once. This makes the code align better with the intuitions of idiomatic JavaScript usage as there are no stale closures to worry about. Composition API calls are also not sensitive to call order and can be conditional.
+
+- Vue's runtime reactivity system automatically collects reactive dependencies used in computed properties and watchers, so there's no need to manually declare dependencies.
+
+- No need to manually cache callback functions to avoid unnecessary child updates. In general, Vue's fine-grained reactivity system ensures child components only update when they need to. Manual child-update optimizations are rarely a concern for Vue developers.
+
+We acknowledge the creativity of React Hooks, and it is a major source of inspiration for Composition API. However, the issues mentioned above do exist in its design and we noticed Vue's reactivity model happens to provide a way around them.
