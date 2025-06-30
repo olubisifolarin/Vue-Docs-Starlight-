@@ -100,9 +100,7 @@ Users can navigate an application through headings. Having descriptive headings 
 | nav | role="navigation" | Collection of links suitable for use when navigating the document or related documents |
 | main | role="main" | The main or central content of the document. |
 | footer | role="contentinfo" | Information about the parent document: footnotes/copyrights/links to privacy statement |
-| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
-| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
-| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
-| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
-| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
-| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
+| aside | role="complementary" | Supports the main content, yet is separated and meaningful on its own content|
+| search | role="search" | This section contains the search functionality for the application |
+| form | role="form"2 | Collection of form-associated elements |
+| section | role="region" | Content that is relevant and that users will likely want to navigate to. Label must be provided for this element |
