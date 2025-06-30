@@ -22,3 +22,43 @@ Typically this is done on the top of App.vue as it will be the first focusable e
   </li>
 </ul>
 ```
+To hide the link unless it is focused, you can add the following style:
+
+```
+.skip-links {
+  list-style: none;
+}
+.skip-link {
+  white-space: nowrap;
+  margin: 1em auto;
+  top: 0;
+  position: fixed;
+  left: 50%;
+  margin-left: -72px;
+  opacity: 0;
+}
+.skip-link:focus {
+  opacity: 1;
+  background-color: white;
+  padding: 0.5em;
+  border: 1px solid black;
+}
+```
+Once a user changes route, bring focus back to the very beginning of the page, right before the skip link. This can be achieved by calling focus on the `backToTop` template ref (assuming usage of `vue-router`):
+
+```
+<script setup>
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const backToTop = ref()
+
+watch(
+  () => route.path,
+  () => {
+    backToTop.value.focus()
+  }
+)
+</script>
+```
