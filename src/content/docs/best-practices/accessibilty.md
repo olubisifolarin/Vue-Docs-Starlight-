@@ -96,10 +96,10 @@ Users can navigate an application through headings. Having descriptive headings 
 
 | HTML | ARIA Role | Landmark Purpose |
 |----------|----------|----------|
-| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
-| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
-| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
-| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
+| header | role="banner" | Prime heading: title of the page |
+| nav | role="navigation" | Collection of links suitable for use when navigating the document or related documents |
+| main | role="main" | The main or central content of the document. |
+| footer | role="contentinfo" | Information about the parent document: footnotes/copyrights/links to privacy statement |
 | Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
 | Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
 | Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
