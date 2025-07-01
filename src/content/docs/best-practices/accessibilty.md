@@ -102,5 +102,26 @@ Users can navigate an application through headings. Having descriptive headings 
 | footer | role="contentinfo" | Information about the parent document: footnotes/copyrights/links to privacy statement |
 | aside | role="complementary" | Supports the main content, yet is separated and meaningful on its own content|
 | search | role="search" | This section contains the search functionality for the application |
-| form | role="form"2 | Collection of form-associated elements |
+| form | role="form" | Collection of form-associated elements |
 | section | role="region" | Content that is relevant and that users will likely want to navigate to. Label must be provided for this element |
+
+
+#### Semantic Forms​
+When creating a form, you can use the following elements: `<form>`, `<label>`, `<input>`, `<textarea>`, and `<button>`
+
+Labels are typically placed on top or to the left of the form fields:
+
+```
+<form action="/dataCollectionLocation" method="post" autocomplete="on">
+  <div v-for="item in formItems" :key="item.id" class="form-item">
+    <label :for="item.id">{{ item.label }}: </label>
+    <input
+      :type="item.type"
+      :id="item.id"
+      :name="item.id"
+      v-model="item.value"
+    />
+  </div>
+  <button type="submit">Submit</button>
+</form>
+```
