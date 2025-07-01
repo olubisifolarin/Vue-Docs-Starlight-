@@ -148,3 +148,43 @@ Though you might have seen labels wrapping the input fields like this:
 
 Explicitly setting the labels with a matching id is better supported by assistive technology.
 :::
+
+`aria-label​'
+You can also give the input an accessible name with `aria-label'.
+
+```
+<label for="name">Name: </label>
+<input
+  type="text"
+  name="name"
+  id="name"
+  v-model="name"
+  :aria-label="nameLabel"
+/>
+```
+
+`aria-labelledby​`
+Using `aria-labelledby` is similar to `aria-label` except it is used if the label text is visible on screen. It is paired to other elements by their `id` and you can link multiple `ids':
+
+```
+<form
+  class="demo"
+  action="/dataCollectionLocation"
+  method="post"
+  autocomplete="on"
+>
+  <h1 id="billing">Billing</h1>
+  <div class="form-item">
+    <label for="name">Name: </label>
+    <input
+      type="text"
+      name="name"
+      id="name"
+      v-model="name"
+      aria-labelledby="billing name"
+    />
+  </div>
+  <button type="submit">Submit</button>
+</form>
+
+```
