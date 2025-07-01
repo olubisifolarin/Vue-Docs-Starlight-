@@ -125,3 +125,26 @@ Labels are typically placed on top or to the left of the form fields:
   <button type="submit">Submit</button>
 </form>
 ```
+
+Notice how you can include autocomplete='on' on the form element and it will apply to all inputs in your form. You can also set [different values for autocomplete attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete) for each input.
+
+#### Labels​
+Provide labels to describe the purpose of all form control; linking `for` and `id`:
+
+```
+<label for="name">Name: </label>
+<input type="text" name="name" id="name" v-model="name" />
+```
+
+:::danger[warning]
+Though you might have seen labels wrapping the input fields like this:
+
+```
+<label>
+  Name:
+  <input type="text" name="name" id="name" v-model="name" />
+</label>
+```
+
+Explicitly setting the labels with a matching id is better supported by assistive technology.
+:::
