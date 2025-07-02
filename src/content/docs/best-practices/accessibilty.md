@@ -334,3 +334,50 @@ Adding `aria-hidden="true"` will hide the element from assistive technology but 
 <p>This is not hidden from screen readers.</p>
 <p aria-hidden="true">This is hidden from screen readers.</p>
 ```
+
+#### Buttons​
+When using buttons inside a form, you must set the type to prevent submitting the form. You can also use an input to create buttons:
+
+```
+<form action="/dataCollectionLocation" method="post" autocomplete="on">
+  <!-- Buttons -->
+  <button type="button">Cancel</button>
+  <button type="submit">Submit</button>
+
+  <!-- Input buttons -->
+  <input type="button" value="Cancel" />
+  <input type="submit" value="Submit" />
+</form>
+```
+
+#### Functional Images​
+You can use this technique to create functional images.
+
+- Input fields
+
+  - These images will act as a submit type button on forms
+
+  ```
+  <form role="search">
+  <label for="search" class="hidden-visually">Search: </label>
+  <input type="text" name="search" id="search" v-model="search" />
+  <input
+    type="image"
+    class="btnImg"
+    src="https://img.icons8.com/search"
+    alt="Search"
+  />
+</form>
+  ```
+
+  - icons
+  ```
+  <form role="search">
+  <label for="searchIcon" class="hidden-visually">Search: </label>
+  <input type="text" name="searchIcon" id="searchIcon" v-model="searchIcon" />
+  <button type="submit">
+    <i class="fas fa-search" aria-hidden="true"></i>
+    <span class="hidden-visually">Search</span>
+  </button>
+</form>
+  ```
