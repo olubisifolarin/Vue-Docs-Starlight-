@@ -269,3 +269,68 @@ It is best to provide all the information the user needs to fill out forms outsi
 
 #### Instructions​
 When adding instructions for your input fields, make sure to link it correctly to the input. You can provide additional instructions and bind multiple ids inside an `aria-labelledby`. This allows for more flexible design.
+
+```
+<fieldset>
+  <legend>Using aria-labelledby</legend>
+  <label id="date-label" for="date">Current Date: </label>
+  <input
+    type="date"
+    name="date"
+    id="date"
+    aria-labelledby="date-label date-instructions"
+  />
+  <p id="date-instructions">MM/DD/YYYY</p>
+</fieldset>
+```
+
+Alternatively, you can attach the instructions to the input with `aria-describedby`:
+
+```
+<fieldset>
+  <legend>Using aria-describedby</legend>
+  <label id="dob" for="dob">Date of Birth: </label>
+  <input type="date" name="dob" id="dob" aria-describedby="dob-instructions" />
+  <p id="dob-instructions">MM/DD/YYYY</p>
+</fieldset>
+```
+
+#### Hiding Content​
+
+Usually it is not recommended to visually hide labels, even if the input has an accessible name. However, if the functionality of the input can be understood with surrounding content, then we can hide the visual label.
+
+Let's look at this search field:
+
+```
+<form role="search">
+  <label for="search" class="hidden-visually">Search: </label>
+  <input type="text" name="search" id="search" v-model="search" />
+  <button type="submit">Search</button>
+</form>
+```
+
+We can do this because the search button will help visual users identify the purpose of the input field.
+
+We can use CSS to visually hide elements but keep them available for assistive technology:
+
+```
+.hidden-visually {
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+}
+```
+
+`aria-hidden="true"​`
+Adding `aria-hidden="true"` will hide the element from assistive technology but leave it visually available for other users. Do not use it on focusable elements, purely on decorative, duplicated or offscreen content.
+
+```
+<p>This is not hidden from screen readers.</p>
+<p aria-hidden="true">This is hidden from screen readers.</p>
+```
