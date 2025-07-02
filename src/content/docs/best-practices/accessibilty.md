@@ -149,7 +149,8 @@ Though you might have seen labels wrapping the input fields like this:
 Explicitly setting the labels with a matching id is better supported by assistive technology.
 :::
 
-`aria-label​'
+`aria-label​`
+
 You can also give the input an accessible name with `aria-label'.
 
 ```
@@ -164,6 +165,7 @@ You can also give the input an accessible name with `aria-label'.
 ```
 
 `aria-labelledby​`
+
 Using `aria-labelledby` is similar to `aria-label` except it is used if the label text is visible on screen. It is paired to other elements by their `id` and you can link multiple `ids':
 
 ```
@@ -187,4 +189,32 @@ Using `aria-labelledby` is similar to `aria-label` except it is used if the labe
   <button type="submit">Submit</button>
 </form>
 
+```
+
+`aria-describedby​`
+
+[aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-describedby) is used the same way as `aria-labelledby` except provides a description with additional information that the user might need. This can be used to describe the criteria for any input:
+
+```
+<form
+  class="demo"
+  action="/dataCollectionLocation"
+  method="post"
+  autocomplete="on"
+>
+  <h1 id="billing">Billing</h1>
+  <div class="form-item">
+    <label for="name">Full Name: </label>
+    <input
+      type="text"
+      name="name"
+      id="name"
+      v-model="name"
+      aria-labelledby="billing name"
+      aria-describedby="nameDescription"
+    />
+    <p id="nameDescription">Please provide first and last name.</p>
+  </div>
+  <button type="submit">Submit</button>
+</form>
 ```
