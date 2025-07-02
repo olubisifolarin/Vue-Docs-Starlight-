@@ -220,6 +220,7 @@ Using `aria-labelledby` is similar to `aria-label` except it is used if the labe
 ```
 
 #### Placeholder​
+
 Avoid using placeholders as they can confuse many users.
 
 One of the issues with placeholders is that they don't meet the [color contrast criteria](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html) by default; fixing the color contrast makes the placeholder look like pre-populated data in the input fields. Looking at the following example, you can see that the Last Name placeholder which meets the color contrast criteria looks like pre-populated data:
@@ -268,6 +269,7 @@ One of the issues with placeholders is that they don't meet the [color contrast 
 It is best to provide all the information the user needs to fill out forms outside any inputs.
 
 #### Instructions​
+
 When adding instructions for your input fields, make sure to link it correctly to the input. You can provide additional instructions and bind multiple ids inside an `aria-labelledby`. This allows for more flexible design.
 
 ```
@@ -328,6 +330,7 @@ We can use CSS to visually hide elements but keep them available for assistive t
 ```
 
 `aria-hidden="true"​`
+
 Adding `aria-hidden="true"` will hide the element from assistive technology but leave it visually available for other users. Do not use it on focusable elements, purely on decorative, duplicated or offscreen content.
 
 ```
@@ -367,10 +370,11 @@ You can use this technique to create functional images.
     src="https://img.icons8.com/search"
     alt="Search"
   />
-</form>
+  </form>
   ```
 
   - icons
+  
   ```
   <form role="search">
   <label for="searchIcon" class="hidden-visually">Search: </label>
@@ -392,20 +396,24 @@ The World Wide Web Consortium (W3C) Web Accessibility Initiative (WAI) develops 
 - [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/)
   - web content - used by developers, authoring tools, and accessibility evaluation tools
 
-  Web Content Accessibility Guidelines (WCAG)​
-WCAG 2.1 extends on WCAG 2.0 and allows implementation of new technologies by addressing changes to the web. The W3C encourages use of the most current version of WCAG when developing or updating Web accessibility policies.
+#### Web Content Accessibility Guidelines (WCAG)​
+[WCAG 2.1](https://www.w3.org/TR/WCAG21/) extends on [WCAG 2.0](https://www.w3.org/TR/WCAG20/) and allows implementation of new technologies by addressing changes to the web. The W3C encourages use of the most current version of WCAG when developing or updating Web accessibility policies.
 
-WCAG 2.1 Four Main Guiding Principles (abbreviated as POUR):​
-Perceivable
-Users must be able to perceive the information being presented
-Operable
-Interface forms, controls, and navigation are operable
-Understandable
-Information and the operation of user interface must be understandable to all users
-Robust
-Users must be able to access the content as technologies advance
-Web Accessibility Initiative – Accessible Rich Internet Applications (WAI-ARIA)​
+##### WCAG 2.1 Four Main Guiding Principles (abbreviated as POUR):​
+- Perceivable
+  - Users must be able to perceive the information being presented
+
+- Operable
+  - Interface forms, controls, and navigation are operable
+
+- Understandable
+  - Information and the operation of user interface must be understandable to all users
+
+- Robust
+  - Users must be able to access the content as technologies advance
+
+##### Web Accessibility Initiative – Accessible Rich Internet Applications (WAI-ARIA)​
 W3C's WAI-ARIA provides guidance on how to build dynamic content and advanced user interface controls.
 
-Accessible Rich Internet Applications (WAI-ARIA) 1.2
-WAI-ARIA Authoring Practices 1.2
+- Accessible Rich Internet Applications (WAI-ARIA) 1.2
+- WAI-ARIA Authoring Practices 1.2
