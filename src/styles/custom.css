@@ -1,0 +1,4 @@
+/* Remove underlines from markdown links in content */
+.sl-markdown-content a {
+  text-decoration: none;
+}

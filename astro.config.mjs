@@ -2,12 +2,14 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
+
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://olubisifolarin.github.io/Vue-Docs-Starlight-/',
   	base: 'Vue-Docs-Starlight-/',
 	integrations: [
 		starlight({
+			customCss: ['./src/styles/custom.css'],
 			title: 'Vue.js',
 			favicon: '/vue.jpg',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/olubisifolarin' }], 
